@@ -1,0 +1,26 @@
+{block title}{$product->name}{/block}
+
+{block content}
+<nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+        <li><a href="/" class="ajax">Home</a></li>
+        {foreach $product->categories as $category}
+        <li><a n:href="Catalog:show $category->slug" class="ajax">{$category->name}</a></li>
+        {/foreach}
+        <li class="is-active"><a href="#" aria-current="page">{$product->name}</a></li>
+    </ul>
+</nav>
+
+<div class="card mt-4">
+    <header class="card-header">
+        <p class="card-header-title">
+            {$product->name}
+        </p>
+    </header>
+    <div class="card-content">
+        <div class="content">
+            {$product->description}
+        </div>
+    </div>
+</div>
+{/block}

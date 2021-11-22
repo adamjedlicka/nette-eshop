@@ -23,6 +23,7 @@ services:
 	- App\Router\RouterFactory::createRouter
 
 	- App\Model\Repositories\ProductRepository
+	- App\Model\Repositories\CategoryRepository
 
 	- App\Latte\Filters\Price
 

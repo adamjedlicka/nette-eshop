@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateCategoryTable extends AbstractMigration
+final class CreateValueTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -19,11 +19,10 @@ final class CreateCategoryTable extends AbstractMigration
      */
     public function change(): void
     {
-        $this->table('category')
+        $this->table('value')
             ->addColumn('name', 'string')
-            ->addColumn('description', 'text', ['default' => ''])
-            ->addColumn('slug', 'string')
-            ->addIndex('slug', ['unique' => true])
+            ->addColumn('attribute_id', 'integer')
+            ->addForeignKey('attribute_id', 'attribute', 'id')
             ->create();
     }
 }
