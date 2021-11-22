@@ -25,10 +25,20 @@ class CategorySeeder extends AbstractSeed
             $data[] = [
                 'name' => $faker->name(),
                 'description' => $faker->text(),
-                'slug' => $faker->unique()->slug(),
             ];
         }
 
         $this->table('category')->insert($data)->saveData();
+
+        $slugs = [];
+
+        for ($i = 1; $i <= self::CATEGORIES; $i++) {
+            $slugs[] = [
+                'value' => $faker->unique()->slug(),
+                'category_id' => $i,
+            ];
+        }
+
+        $this->table('slug')->insert($slugs)->saveData();
     }
 }

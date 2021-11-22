@@ -6,8 +6,8 @@ namespace App\Model\Entities;
  * @property int $id
  * @property string $name
  * @property string $description
- * @property string $slug
- * @property Product[] $products m:hasMany
+ * @property Slug $slug m:belongsToOne
+ * @property Product[] $products m:hasMany(:category_product)
  */
 class Category extends BaseEntity
 {

@@ -8,8 +8,8 @@ namespace App\Model\Entities;
  * @property string $description
  * @property int $price
  * @property string $currency
- * @property string $slug
- * @property Category[] $categories m:hasMany(product_id:category_product:category_id:category)
+ * @property Slug $slug m:belongsToOne
+ * @property Category[] $categories m:hasMany(:category_product)
  */
 class Product extends BaseEntity
 {

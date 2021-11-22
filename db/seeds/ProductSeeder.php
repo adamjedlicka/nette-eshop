@@ -19,18 +19,28 @@ class ProductSeeder extends AbstractSeed
     {
         $faker = Factory::create();
 
-        $data = [];
+        $products = [];
 
         for ($i = 0; $i < self::PRODUCTS; $i++) {
-            $data[] = [
+            $products[] = [
                 'name' => $faker->sentence($faker->numberBetween(1, 4)),
                 'description' => $faker->text(),
                 'price' => $faker->randomNumber(6),
-                'slug' => $faker->unique()->slug(),
             ];
         }
 
-        $this->table('product')->insert($data)->saveData();
+        $this->table('product')->insert($products)->saveData();
+
+        $slugs = [];
+
+        for ($i = 1; $i <= self::PRODUCTS; $i++) {
+            $slugs[] = [
+                'value' => $faker->unique()->slug(),
+                'product_id' => $i,
+            ];
+        }
+
+        $this->table('slug')->insert($slugs)->saveData();
 
         $pivot = [];
 
