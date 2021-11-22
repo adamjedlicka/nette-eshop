@@ -6,8 +6,8 @@ use App\Model\Entities\Product;
 
 class ProductRepository extends BaseRepository
 {
-    public function find($id): Product
+    public function findBy($cond): Product
     {
-        return parent::find($id);
+        return parent::findBy($cond);
     }
 }

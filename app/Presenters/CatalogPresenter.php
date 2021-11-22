@@ -4,7 +4,7 @@ namespace App\Presenters;
 
 use App\Model\Repositories\ProductRepository;
 
-final class ProductsPresenter extends BasePresenter
+final class CatalogPresenter extends BasePresenter
 {
     private ProductRepository $productRepository;
 
@@ -19,8 +19,8 @@ final class ProductsPresenter extends BasePresenter
         $this->template->products = $this->productRepository->findAll();
     }
 
-    public function renderShow($id)
+    public function renderShow($slug)
     {
-        $this->template->product = $this->productRepository->find($id);
+        $this->template->product = $this->productRepository->findBy(['slug' => $slug]);
     }
 }

@@ -7,11 +7,11 @@ use App\Exceptions\EntityNotFoundException;
 
 class BaseRepository extends Repository
 {
-    public function find($id)
+    public function findBy($cond)
     {
         $row = $this->connection->select('*')
             ->from($this->getTable())
-            ->where($this->mapper->getPrimaryKey($this->getTable()) . '= %i', $id)
+            ->where($cond)
             ->fetch();
 
         if ($row === null) {

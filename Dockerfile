@@ -12,4 +12,4 @@ RUN composer install
 
 COPY . ./
 
-CMD sh docker/init.sh
+CMD composer install && php-fpm -R

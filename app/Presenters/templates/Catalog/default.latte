@@ -11,8 +11,8 @@
         <p class="content">{$product->description}</p>
       </div>
       <div class="card-footer">
-        <small class="card-footer-item">{$product->finalPrice|price}</small>
-        <a n:href="show $product->id" class="ajax card-footer-item">Detail</a>
+        <small class="card-footer-item">{$product->price|price}</small>
+        <a n:href="show $product->slug" class="ajax card-footer-item">Detail</a>
       </div>
     </div>
   </div>
