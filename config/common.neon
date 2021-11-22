@@ -1,0 +1,31 @@
+extensions:
+    leanmapper: App\Extensions\LeanMapperExtension
+
+leanmapper:
+	db:
+		driver: pdo
+		dsn: 'pgsql:host=db;port=5432;dbname=postgres;user=postgres;password=password'
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+session:
+	expiration: 14 days
+
+di:
+	export:
+		parameters: no
+		tags: no
+
+services:
+	- App\Router\RouterFactory::createRouter
+
+	- App\Model\Repositories\ProductRepository
+
+	- App\Latte\Filters\Price
+
+	nette.latteFactory:
+		setup:
+			- addFilter(price, @App\Latte\Filters\Price)

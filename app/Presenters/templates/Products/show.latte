@@ -1,0 +1,16 @@
+{block title}{$product->name}{/block}
+
+{block content}
+<div class="card mt-4">
+    <header class="card-header">
+        <p class="card-header-title">
+            {$product->name}
+        </p>
+    </header>
+    <div class="card-content">
+        <div class="content">
+            {$product->description}
+        </div>
+    </div>
+</div>
+{/block}

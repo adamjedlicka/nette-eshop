@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+      - ./docker/zzz-docker.conf:/usr/local/etc/php-fpm.d/zzz-docker.conf
+    depends_on:
+      - server
+      - db
+  server:
+    image: caddy:alpine
+    volumes:
+      - .:/app
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - 8000:80
+  db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_PASSWORD=password
