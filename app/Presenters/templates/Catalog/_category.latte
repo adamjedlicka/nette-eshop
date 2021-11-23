@@ -12,8 +12,20 @@
 
     <h1 class="title">{$category->name}</h1>
 
+    <a n:href="this" class="ajax">No filters</a>
+    {foreach $category->attributes as $attribute}
+    <div>
+        {$attribute->name}
+        {foreach $attribute->values as $value}
+        <div>
+            <a n:href="this valueId:$value->id" class="ajax">{$value->name}</a>
+        </div>
+        {/foreach}
+    </div>
+    {/foreach}
+
     <div class="columns is-multiline mt-4">
-    {foreach $category->products as $product}
+    {foreach $products as $product}
     <div class="column is-half">
         <div class="card">
         <div class="card-content">

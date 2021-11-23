@@ -40,6 +40,7 @@ final class CatalogPresenter extends BasePresenter
             return;
         } else if ($slug->category) {
             $this->template->category = $slug->category;
+            $this->template->products = $this->productRepository->getByFilteredCategory($slug->category, $this->getParameter('valueId'));
             $this->template->setFile(__DIR__ . '/templates/Catalog/_category.latte');
             return;
         }
