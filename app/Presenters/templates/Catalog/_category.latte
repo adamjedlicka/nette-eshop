@@ -1,7 +1,6 @@
 {block title}{$category->name}{/block}
 
 {block content}
-
 <div class="section">
     <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
@@ -24,20 +23,5 @@
     </div>
     {/foreach}
 
-    <div class="columns is-multiline mt-4">
-    {foreach $products as $product}
-    <div class="column is-half">
-        <div class="card">
-        <div class="card-content">
-            <p class="title">{$product->name}</p>
-            <p class="content">{$product->description}</p>
-        </div>
-        <div class="card-footer">
-            <small class="card-footer-item">{$product->price|price}</small>
-            <a n:href="show $product->slug->value" class="ajax card-footer-item">Detail</a>
-        </div>
-        </div>
-    </div>
-    {/foreach}
-    </div>
+    {include '_productListing.latte'}
 </div>

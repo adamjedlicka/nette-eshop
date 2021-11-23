@@ -22,7 +22,8 @@
 		"tracy/tracy": "^2.8",
 		"tharos/leanmapper": "^4.0",
 		"robmorgan/phinx": "^0.12.8",
-		"fakerphp/faker": "^1.16"
+		"fakerphp/faker": "^1.16",
+		"mbezhanov/faker-provider-collection": "^2.0"
 	},
 	"require-dev": {
 		"nette/tester": "^2.3",

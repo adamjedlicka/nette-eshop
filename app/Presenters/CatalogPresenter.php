@@ -25,6 +25,13 @@ final class CatalogPresenter extends BasePresenter
         $this->categoryRepository = $categoryRepository;
     }
 
+    public function startup()
+    {
+        parent::startup();
+
+        $this->template->menu = $this->categoryRepository->findAll();
+    }
+
     public function renderDefault()
     {
         $this->template->products = $this->productRepository->findAll();

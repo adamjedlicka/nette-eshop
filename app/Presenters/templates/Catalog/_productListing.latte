@@ -1,0 +1,25 @@
+<div class="columns is-multiline mt-4">
+    {foreach $products as $product}
+    <div class="column is-12-mobile is-6-tablet is-4-desktop is-3-fullhd">
+        <div class="card is-flex is-flex-direction-column" style="height: 100%">
+            <div class="card-image">
+                <figure class="image is-square">
+                    <img src="{$product->thumbnail}" alt="{$product->name}" loading="lazy">
+                </figure>
+            </div>
+
+            <div class="card-content is-flex-grow-1">
+                <p class="title">{$product->name}</p>
+                <p class="subtitle">{$product->price|price}</p>
+                <p class="content">{$product->description}</p>
+            </div>
+
+            <div class="card-footer">
+                <a n:href="show $product->slug->value" class="ajax card-footer-item">
+                Detail
+                </a>
+            </div>
+        </div>
+    </div>
+    {/foreach}
+</div>

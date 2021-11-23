@@ -12,17 +12,20 @@
         </ul>
     </nav>
 
-    <h1 class="title">{$product->name}</h1>
-
-    <div class="card mt-4">
-        <header class="card-header">
-            <p class="card-header-title">
-                {$product->name}
-            </p>
-        </header>
-        <div class="card-content">
-            <div class="content">
-                {$product->description}
+    <div class="columns">
+        <div class="column">
+            <div class="box is-paddingless">
+                <figure class="image is-square">
+                    <img src="{$product->thumbnail}">
+                </figure>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box">
+                <h1 class="title">{$product->name}</h1>
+                <p>
+                    {$product->description}
+                </p>
             </div>
         </div>
     </div>

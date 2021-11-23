@@ -24,6 +24,7 @@ final class CreateProductTable extends AbstractMigration
             ->addColumn('description', 'text', ['default' => ''])
             ->addColumn('price', 'integer')
             ->addColumn('currency', 'string', ['default' => 'CZK'])
+            ->addColumn('thumbnail', 'string')
             ->create();
     }
 }
