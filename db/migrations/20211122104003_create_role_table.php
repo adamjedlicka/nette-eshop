@@ -19,8 +19,18 @@ final class CreateRoleTable extends AbstractMigration
      */
     public function change(): void
     {
-        $this->table('role')
-            ->addColumn('value', 'string')
+        $this->table('role', ['id' => false, 'primary_key' => 'id'])
+            ->addColumn('id', 'string')
             ->create();
+
+        if ($this->isMigratingUp()) {
+            $this->table('role')
+                ->insert([
+                    ['id' => 'admin'],
+                    ['id' => 'authenticated'],
+                    ['id' => 'guest'],
+                ])
+                ->saveData();
+        }
     }
 }

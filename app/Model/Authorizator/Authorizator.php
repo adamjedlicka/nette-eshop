@@ -10,11 +10,11 @@ class Authorizator extends \Nette\Security\Permission
     public function __construct(UsersFacade $usersFacade)
     {
         foreach ($usersFacade->findResources() as $resource) {
-            $this->addResource($resource->resourceId);
+            $this->addResource($resource->id);
         }
 
         foreach ($usersFacade->findRoles() as $role) {
-            $this->addRole($role->roleId);
+            $this->addRole($role->id);
         }
 
         foreach ($usersFacade->findPermissions() as $permission) {

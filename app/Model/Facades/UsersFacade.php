@@ -61,7 +61,7 @@ class UsersFacade
         $roles[] = new AuthenticatedRole($user->id);
 
         if (!empty($user->role)) {
-            $roles[] = $user->role->roleId;
+            $roles[] = $user->role->id;
         }
 
         return new SimpleIdentity($user->id, $roles, ['name' => $user->name, 'email' => $user->email]);

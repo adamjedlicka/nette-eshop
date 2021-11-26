@@ -9,15 +9,19 @@ use Nette\StaticClass;
 
 final class RouterFactory
 {
-	use StaticClass;
+    use StaticClass;
 
-	public static function createRouter(): RouteList
-	{
-		$storefront = new RouteList('Storefront');
-		$storefront->addRoute('<presenter=Homepage>/<action=default>[/<id>]');
+    public static function createRouter(): RouteList
+    {
+        $admin = new RouteList('Admin');
+        $admin->addRoute('admin/<presenter=Dashboard>/<action=default>[/<id>]');
 
-		$router = new RouteList();
-		$router->add($storefront);
-		return $router;
-	}
+        $storefront = new RouteList('Storefront');
+        $storefront->addRoute('<presenter=Homepage>/<action=default>[/<id>]');
+
+        $router = new RouteList();
+        $router->add($admin);
+        $router->add($storefront);
+        return $router;
+    }
 }
