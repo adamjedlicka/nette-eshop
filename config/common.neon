@@ -35,12 +35,16 @@ services:
     - App\Model\Repositories\SlugRepository
 
     - App\Model\Facades\UsersFacade
+    - App\Model\Facades\CategoriesFacade
+    - App\Model\Facades\SlugsFacade
 
     - App\Latte\Filters\Price
 
     - App\StorefrontModule\Components\Header\HeaderFactory
     - App\StorefrontModule\Components\UserLoginForm\UserLoginFormFactory
     - App\StorefrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
+
+    - App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory
 
     nette.latteFactory:
         setup:
