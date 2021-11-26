@@ -14,7 +14,7 @@ services:
       - .:/app
       - ./docker/Caddyfile:/etc/caddy/Caddyfile
     ports:
-      - 8000:80
+      - 8080:80
   db:
     image: postgres:alpine
     environment:
