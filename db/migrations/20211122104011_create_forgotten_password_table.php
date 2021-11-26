@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateCategoryProductTable extends AbstractMigration
+final class CreateForgottenPasswordTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -19,11 +19,11 @@ final class CreateCategoryProductTable extends AbstractMigration
      */
     public function change(): void
     {
-        $this->table('category_product')
-            ->addColumn('category_id', 'integer')
-            ->addForeignKey('category_id', 'category', 'id')
-            ->addColumn('product_id', 'integer')
-            ->addForeignKey('product_id', 'product', 'id')
+        $this->table('forgotten_password')
+            ->addColumn('user_id', 'integer')
+            ->addForeignKey('user_id', 'user', 'id')
+            ->addColumn('code', 'string')
+            ->addColumn('created', 'datetime')
             ->create();
     }
 }

@@ -21,6 +21,11 @@ class BaseRepository extends Repository
         return $this->createEntity($row);
     }
 
+    public function find($id)
+    {
+        return $this->findBy(['id' => $id]);
+    }
+
     public function findAll()
     {
         $rows = $this->connection->select('*')

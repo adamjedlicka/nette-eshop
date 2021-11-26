@@ -13,11 +13,11 @@ final class RouterFactory
 
 	public static function createRouter(): RouteList
 	{
-		$router = new RouteList;
+		$storefront = new RouteList('Storefront');
+		$storefront->addRoute('<presenter=Homepage>/<action=default>[/<id>]');
 
-		$router->addRoute('/', 'Catalog:default');
-		$router->addRoute('/<slug>', 'Catalog:show');
-
+		$router = new RouteList();
+		$router->add($storefront);
 		return $router;
 	}
 }

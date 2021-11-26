@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="ajax navbar-brand" href="/">Eshop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                {foreach $categories as $category}
+                <li class="nav-item">
+                    <a class="ajax nav-link" href="{$category->slug->value}">{$category->name}</a>
+                </li>
+                {/foreach}
+            </ul>
+            {if $user->isLoggedIn()}
+                <a class="ajax btn btn-outline-secondary" href="{plink User:default}">Account</a>
+            {else}
+                <a class="ajax btn btn-outline-secondary" href="{plink User:login}">Login</a>
+            {/if}
+        </div>
+    </div>
+</nav>

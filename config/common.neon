@@ -2,32 +2,46 @@ extensions:
     leanmapper: App\Extensions\LeanMapperExtension
 
 leanmapper:
-	db:
-		driver: pdo
-		dsn: 'pgsql:host=db;port=5432;dbname=postgres;user=postgres;password=password'
+    db:
+        driver: pdo
+        dsn: 'pgsql:host=db;port=5432;dbname=postgres;user=postgres;password=password'
 
 application:
-	errorPresenter: Error
-	mapping:
-		*: App\*Module\Presenters\*Presenter
+    errorPresenter: Error
+    mapping:
+        *: App\*Module\Presenters\*Presenter
 
 session:
-	expiration: 14 days
+    expiration: 14 days
 
 di:
-	export:
-		parameters: no
-		tags: no
+    export:
+        parameters: no
+        tags: no
 
 services:
-	- App\Router\RouterFactory::createRouter
+    - App\Router\RouterFactory::createRouter
 
-	- App\Model\Repositories\SlugRepository
-	- App\Model\Repositories\ProductRepository
-	- App\Model\Repositories\CategoryRepository
+    - App\Model\Authenticator\Authenticator
+    - App\Model\Authorizator\Authorizator
 
-	- App\Latte\Filters\Price
+    - App\Model\Repositories\UserRepository
+    - App\Model\Repositories\ResourceRepository
+    - App\Model\Repositories\RoleRepository
+    - App\Model\Repositories\PermissionRepository
+    - App\Model\Repositories\ForgottenPasswordRepository
+    - App\Model\Repositories\ProductRepository
+    - App\Model\Repositories\CategoryRepository
+    - App\Model\Repositories\SlugRepository
 
-	nette.latteFactory:
-		setup:
-			- addFilter(price, @App\Latte\Filters\Price)
+    - App\Model\Facades\UsersFacade
+
+    - App\Latte\Filters\Price
+
+    - App\StorefrontModule\Components\Header\HeaderFactory
+    - App\StorefrontModule\Components\UserLoginForm\UserLoginFormFactory
+    - App\StorefrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
+
+    nette.latteFactory:
+        setup:
+            - addFilter(price, @App\Latte\Filters\Price)

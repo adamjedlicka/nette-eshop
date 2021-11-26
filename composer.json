@@ -23,7 +23,8 @@
 		"tharos/leanmapper": "^4.0",
 		"robmorgan/phinx": "^0.12.8",
 		"fakerphp/faker": "^1.16",
-		"mbezhanov/faker-provider-collection": "^2.0"
+		"mbezhanov/faker-provider-collection": "^2.0",
+		"nextras/forms-rendering": "^1.1"
 	},
 	"require-dev": {
 		"nette/tester": "^2.3",
