@@ -32,22 +32,10 @@ final class CreatePermissionTable extends AbstractMigration
             $this->table('permission')
                 ->insert([
                     ['role_id' =>  'admin', 'resource_id' => 'Admin:Category', 'action' => '', 'type' => 'allow'],
+                    ['role_id' =>  'admin', 'resource_id' => 'Admin:Product', 'action' => '', 'type' => 'allow'],
                     ['role_id' =>  'admin', 'resource_id' => 'Admin:Dashboard', 'action' => '', 'type' => 'allow'],
-                    ['role_id' =>  'admin', 'resource_id' => 'Category', 'action' => '',  'type' => 'allow'],
-                    ['role_id' => 'authenticated', 'resource_id' => 'Front:Error', 'action' => '', 'type' => 'allow'],
-                    ['role_id' => 'authenticated', 'resource_id' => 'Front:Error4xx', 'action' => '', 'type' => 'allow'],
-                    ['role_id' => 'authenticated', 'resource_id' => 'Front:Homepage', 'action' => '', 'type' => 'allow'],
-                    ['role_id' => 'authenticated', 'resource_id' => 'Front:User', 'action' => 'login', 'type' => 'allow'],
-                    ['role_id' =>  'authenticated', 'resource_id' => 'Front:User', 'action' => 'logout', 'type' => 'allow'],
-                    ['role_id' => 'guest', 'resource_id' => 'Front:Error', 'action' => '', 'type' => 'allow'],
-                    ['role_id' => 'guest', 'resource_id' => 'Front:Error4xx', 'action' => '', 'type' => 'allow'],
-                    ['role_id' => 'guest', 'resource_id' => 'Front:Homepage', 'action' => '', 'type' => 'allow'],
-                    ['role_id' =>  'guest', 'resource_id' => 'Front:User', 'action' => 'facebookLogin', 'type' => 'allow'],
-                    ['role_id' =>  'guest', 'resource_id' => 'Front:User', 'action' => 'forgottenPassword', 'type' => 'allow'],
-                    ['role_id' => 'guest', 'resource_id' => 'Front:User', 'action' => 'login', 'type' => 'allow'],
-                    ['role_id' => 'guest', 'resource_id' => 'Front:User', 'action' => 'logout', 'type' => 'allow'],
-                    ['role_id' =>  'guest', 'resource_id' => 'Front:User', 'action' => 'register', 'type' => 'allow'],
-                    ['role_id' =>  'guest', 'resource_id' => 'Front:User', 'action' => 'renewPassword', 'type' => 'allow'],
+                    ['role_id' =>  'admin', 'resource_id' => 'Category', 'action' => '', 'type' => 'allow'],
+                    ['role_id' =>  'admin', 'resource_id' => 'Product', 'action' => '', 'type' => 'allow'],
                 ])
                 ->saveData();
         }

@@ -4,7 +4,6 @@ namespace App\Model\Repositories;
 
 use App\Model\Entities\Category;
 use App\Model\Entities\Product;
-use App\Model\Entities\Value;
 
 class ProductRepository extends BaseRepository
 {

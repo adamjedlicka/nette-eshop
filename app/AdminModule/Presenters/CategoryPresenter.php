@@ -5,7 +5,6 @@ namespace App\AdminModule\Presenters;
 use App\AdminModule\Components\CategoryEditForm\CategoryEditForm;
 use App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory;
 use App\Model\Facades\CategoriesFacade;
-use Nette\Application\UI\Form;
 
 class CategoryPresenter extends BasePresenter
 {
@@ -23,7 +22,7 @@ class CategoryPresenter extends BasePresenter
         try {
             $category = $this->categoriesFacade->getCategory($id);
         } catch (\Exception $e) {
-            $this->flashMessage('Požadovaná kategorie nebyla nalezena.', 'error');
+            $this->flashMessage('Category not found', 'error');
             $this->redirect('default');
         }
         $form = $this->getComponent('categoryEditForm');
@@ -36,19 +35,21 @@ class CategoryPresenter extends BasePresenter
         try {
             $category = $this->categoriesFacade->getCategory($id);
         } catch (\Exception $e) {
-            $this->flashMessage('Požadovaná kategorie nebyla nalezena.', 'error');
+            $this->flashMessage('Category not found', 'error');
             $this->redirect('default');
+            return;
         }
 
         if (!$this->user->isAllowed($category, 'delete')) {
-            $this->flashMessage('Tuto kategorii není možné smazat.', 'error');
+            $this->flashMessage('This category cant be deleted', 'error');
             $this->redirect('default');
+            return;
         }
 
         if ($this->categoriesFacade->deleteCategory($category)) {
             $this->flashMessage('Kategorie byla smazána.', 'info');
         } else {
-            $this->flashMessage('Tuto kategorii není možné smazat.', 'error');
+            $this->flashMessage('This category cant be deleted', 'error');
         }
 
         $this->redirect('default');

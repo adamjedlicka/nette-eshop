@@ -27,13 +27,10 @@ final class CreateResourceTable extends AbstractMigration
             $this->table('resource')
                 ->insert([
                     ['id' => 'Admin:Category'],
+                    ['id' => 'Admin:Product'],
                     ['id' => 'Admin:Dashboard'],
-                    ['id' => 'Admin:Error4xx'],
                     ['id' => 'Category'],
-                    ['id' => 'Front:Error'],
-                    ['id' => 'Front:Error4xx'],
-                    ['id' => 'Front:Homepage'],
-                    ['id' => 'Front:User'],
+                    ['id' => 'Product'],
                 ])
                 ->saveData();
         }

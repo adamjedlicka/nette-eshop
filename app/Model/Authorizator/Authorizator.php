@@ -4,6 +4,7 @@ namespace App\Model\Authorizator;
 
 use App\Model\Entities\Category;
 use App\Model\Entities\Permission;
+use App\Model\Entities\Product;
 use App\Model\Facades\UsersFacade;
 
 class Authorizator extends \Nette\Security\Permission
@@ -33,6 +34,10 @@ class Authorizator extends \Nette\Security\Permission
             return $this->categoryResourceIsAllowed($role, $resource, $privilege);
         }
 
+        if ($resource instanceof Product) {
+            return $this->productResourceIsAllowed($role, $resource, $privilege);
+        }
+
         return parent::isAllowed($role, $resource, $privilege);
     }
 
@@ -44,5 +49,15 @@ class Authorizator extends \Nette\Security\Permission
         }
 
         return parent::isAllowed($role, 'Category', $privilege);
+    }
+
+    private function productResourceIsAllowed($role, Product $resource, $privilege)
+    {
+        switch ($privilege) {
+            case 'delete':
+                //TODO kontrola, jestli jsou v kategorii nějaké produkty - pokud ano, nesmažeme ji
+        }
+
+        return parent::isAllowed($role, 'Product', $privilege);
     }
 }

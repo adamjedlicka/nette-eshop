@@ -10,7 +10,7 @@ namespace App\Model\Entities;
  * @property int $price
  * @property string $currency
  * @property string $thumbnail
- * @property Category $category m:belongsTo
+ * @property Category $category m:hasOne
  */
 class Product extends BaseEntity
 {

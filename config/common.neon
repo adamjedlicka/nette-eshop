@@ -35,6 +35,7 @@ services:
 
     - App\Model\Facades\UsersFacade
     - App\Model\Facades\CategoriesFacade
+    - App\Model\Facades\ProductsFacade
 
     - App\Latte\Filters\Price
 
@@ -43,6 +44,7 @@ services:
     - App\StorefrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
 
     - App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory
+    - App\AdminModule\Components\ProductEditForm\ProductEditFormFactory
 
     nette.latteFactory:
         setup:

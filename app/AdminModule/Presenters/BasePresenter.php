@@ -11,14 +11,13 @@ abstract class BasePresenter extends Presenter
     {
         parent::startup();
 
-        $presenterName = $this->request->presenterName;
         $action = !empty($this->request->parameters['action']) ? $this->request->parameters['action'] : '';
 
-        if (!$this->user->isAllowed($presenterName, $action)) {
+        if (!$this->user->isAllowed($this->request->presenterName, $action)) {
             if ($this->user->isLoggedIn()) {
                 throw new ForbiddenRequestException();
             } else {
-                $this->flashMessage('Pro zobrazení požadovaného obsahu se musíte přihlásit!', 'warning');
+                $this->flashMessage('You need to be logged in', 'warning');
 
                 $this->redirect(':Storefront:User:login', ['backlink' => $this->storeRequest()]);
             }
