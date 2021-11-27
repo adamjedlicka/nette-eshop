@@ -21,6 +21,8 @@ final class CreateCategoryTable extends AbstractMigration
     {
         $this->table('category')
             ->addColumn('name', 'string')
+            ->addColumn('slug', 'string')
+            ->addIndex('slug', ['unique' => true])
             ->addColumn('description', 'text', ['default' => ''])
             ->create();
     }

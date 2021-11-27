@@ -3,13 +3,12 @@
 namespace App\AdminModule\Components\CategoryEditForm;
 
 use App\Model\Entities\Category;
-use App\Model\Entities\Slug;
 use App\Model\Facades\CategoriesFacade;
-use App\Model\Facades\SlugsFacade;
 use Nette\Application\UI\Form;
 use Nette\ComponentModel\IContainer;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\SmartObject;
+use Nette\Utils\Strings;
 use Nextras\FormsRendering\Renderers\Bs5FormRenderer;
 use Nextras\FormsRendering\Renderers\FormLayout;
 
@@ -18,8 +17,6 @@ class CategoryEditForm extends Form
     use SmartObject;
 
     private CategoriesFacade $categoriesFacade;
-
-    private SlugsFacade $slugsFacade;
 
     /** @var callable[] $onFinished */
     public $onFinished = [];
@@ -32,48 +29,40 @@ class CategoryEditForm extends Form
         IContainer $parent = null,
         string $name = null,
         CategoriesFacade $categoriesFacade,
-        SlugsFacade $slugsFacade,
     ) {
         parent::__construct($parent, $name);
         $this->setRenderer(new Bs5FormRenderer(FormLayout::VERTICAL));
         $this->categoriesFacade = $categoriesFacade;
-        $this->slugsFacade = $slugsFacade;
         $this->createSubcomponents();
     }
 
     private function createSubcomponents()
     {
         $id = $this->addHidden('id');
-        $this->addText('name', 'Název kategorie')
-            ->setRequired('Musíte zadat název kategorie');
-        $this->addText('slug', 'URL')
-            ->setRequired('Musíte zadat URL kategorie');
-        $this->addTextArea('description', 'Popis kategorie')
+        $this->addText('name', 'Name')
+            ->setRequired('Name is required');
+        $this->addTextArea('description', 'Description')
             ->setRequired(false);
-        $this->addSubmit('ok', 'uložit')
+        $this->addSubmit('ok', 'Save')
             ->onClick[] = function (SubmitButton $button) {
             $values = $this->getValues('array');
             if (!empty($values['id'])) {
                 try {
                     $category = $this->categoriesFacade->getCategory($values['id']);
-                    $slug = $category->slug;
                 } catch (\Exception $e) {
-                    $this->onFailed('Požadovaná kategorie nebyla nalezena.');
+                    $this->onFailed('Requested category not found');
                     return;
                 }
             } else {
-                $slug = new Slug();
                 $category = new Category();
             }
             $category->assign($values, ['name', 'description']);
+            $category->slug = Strings::webalize($values['name']);
             $this->categoriesFacade->saveCategory($category);
-            $slug->value = $values['slug'];
-            $slug->category = $category;
-            $this->slugsFacade->saveSlug($slug);
             $this->setValues(['id' => $category->id]);
-            $this->onFinished('Kategorie byla uložena.');
+            $this->onFinished('Category was saved');
         };
-        $this->addSubmit('storno', 'zrušit')
+        $this->addSubmit('storno', 'Cancel')
             ->setValidationScope([$id])
             ->onClick[] = function (SubmitButton $button) {
             $this->onCancel();
@@ -93,7 +82,7 @@ class CategoryEditForm extends Form
                 'id' => $values->id,
                 'name' => $values->name,
                 'description' => $values->description,
-                'slug' => $values->slug->value,
+                'slug' => $values->slug,
             ];
         }
         parent::setDefaults($values, $erase);

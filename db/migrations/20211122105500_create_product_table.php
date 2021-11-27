@@ -21,6 +21,8 @@ final class CreateProductTable extends AbstractMigration
     {
         $this->table('product')
             ->addColumn('name', 'string')
+            ->addColumn('slug', 'string')
+            ->addIndex('slug', ['unique' => true])
             ->addColumn('description', 'text', ['default' => ''])
             ->addColumn('price', 'integer')
             ->addColumn('currency', 'string', ['default' => 'CZK'])

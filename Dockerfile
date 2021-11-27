@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN apk add composer postgresql-dev
 
-RUN docker-php-ext-install pdo pdo_pgsql
+RUN docker-php-ext-install pdo pdo_pgsql intl
 
 COPY composer.json composer.lock ./
 

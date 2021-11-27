@@ -20,6 +20,11 @@ class CategoriesFacade
         return $this->categoryRepository->find($id);
     }
 
+    public function getCategoryBySlug(string $slug): Category
+    {
+        return $this->categoryRepository->findBy(['slug' => $slug]);
+    }
+
     public function findCategories(array $params = null, int $offset = null, int $limit = null): array
     {
         return $this->categoryRepository->findAllBy($params, $offset, $limit);

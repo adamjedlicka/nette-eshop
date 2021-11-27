@@ -5,7 +5,6 @@ namespace App\StorefrontModule\Presenters;
 use App\StorefrontModule\Components\Header\Header;
 use App\StorefrontModule\Components\Header\HeaderFactory;
 use Nette\Application\UI\Presenter;
-use Tracy\Debugger;
 
 class BasePresenter extends Presenter
 {

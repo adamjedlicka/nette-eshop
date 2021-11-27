@@ -8,7 +8,7 @@
             <ul class="navbar-nav me-auto">
                 {foreach $categories as $category}
                 <li class="nav-item">
-                    <a class="ajax nav-link" href="{$category->slug->value}">{$category->name}</a>
+                    <a class="ajax nav-link" href="{plink Category:view slug:$category->slug}">{$category->name}</a>
                 </li>
                 {/foreach}
             </ul>

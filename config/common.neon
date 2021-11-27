@@ -32,11 +32,9 @@ services:
     - App\Model\Repositories\ForgottenPasswordRepository
     - App\Model\Repositories\ProductRepository
     - App\Model\Repositories\CategoryRepository
-    - App\Model\Repositories\SlugRepository
 
     - App\Model\Facades\UsersFacade
     - App\Model\Facades\CategoriesFacade
-    - App\Model\Facades\SlugsFacade
 
     - App\Latte\Filters\Price
 
