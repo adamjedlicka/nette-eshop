@@ -11,9 +11,9 @@
 
 <div>{$category->description}</div>
 
-<div class="row">
+<div class="row mt-4 g-4">
+    {foreach $category->products as $product}
     <div class="col-3">
-        {foreach $category->products as $product}
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title">{$product->name}</h2>
@@ -21,6 +21,6 @@
                 <a href="{plink Product:view $product->slug}" class="ajax btn btn-primary">Detail</a>
             </div>
         </div>
-        {/foreach}
     </div>
+    {/foreach}
 </div>
