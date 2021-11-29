@@ -44,12 +44,16 @@ class ProductEditForm extends Form
         $this->addText('name', 'Name')
             ->setRequired('Name is required');
 
+        $this->addTextArea('description', 'Description')
+            ->setRequired(false);
+
         $this->addText('price', 'Price')
             ->addRule($this::FLOAT, 'Price has to be a number')
             ->setRequired('Price is required');
 
         $this->addText('slug', 'Url path')
-            ->setHtmlAttribute('placeholder', 'Will be generated if left empty');
+            ->setHtmlAttribute('placeholder', 'Will be generated if left empty')
+            ->setRequired(false);
 
         $categories = [];
 
@@ -77,6 +81,7 @@ class ProductEditForm extends Form
             }
 
             $product->name = $values['name'];
+            $product->description = $values['description'];
             $product->price = (int) floor($values['price'] * 100);
             $product->slug = $values['slug'] !== '' ? $values['slug'] : Strings::webalize($values['name']);
             $product->category = $this->categoriesFacade->getCategory($values['category']);

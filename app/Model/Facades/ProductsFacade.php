@@ -22,6 +22,11 @@ class ProductsFacade
         return $this->productRepository->find($id);
     }
 
+    public function getProductBySlug(string $slug): Product
+    {
+        return $this->productRepository->findBy(['slug' => $slug]);
+    }
+
     public function findProducts(array $params = null, int $offset = null, int $limit = null): array
     {
         return $this->productRepository->findAllBy($params, $offset, $limit);

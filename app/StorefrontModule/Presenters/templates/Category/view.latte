@@ -1,5 +1,26 @@
 {block content}
 
+<nav class="mt-4" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{plink Homepage:default}" class="ajax">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{$category->name}</li>
+    </ol>
+</nav>
+
 <h1 class="title" n:block="title">{$category->name}</h1>
 
 <div>{$category->description}</div>
+
+<div class="row">
+    <div class="col-3">
+        {foreach $category->products as $product}
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">{$product->name}</h2>
+                <p class="card-text">{$product->description}</p>
+                <a href="{plink Product:view $product->slug}" class="ajax btn btn-primary">Detail</a>
+            </div>
+        </div>
+        {/foreach}
+    </div>
+</div>
