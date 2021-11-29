@@ -4,6 +4,8 @@ namespace App\Model\Facades;
 
 use App\Model\Entities\Product;
 use App\Model\Repositories\ProductRepository;
+use Exception;
+use Tracy\Debugger;
 
 class ProductsFacade
 {
@@ -28,5 +30,15 @@ class ProductsFacade
     public function saveProduct(Product $product): bool
     {
         return (bool)$this->productRepository->persist($product);
+    }
+
+    public function deleteProduct(Product $product): bool
+    {
+        try {
+            return (bool)$this->productRepository->delete($product);
+        } catch (Exception $e) {
+            Debugger::log($e);
+            return false;
+        }
     }
 }

@@ -4,16 +4,8 @@ namespace App\Latte\Filters;
 
 class Price
 {
-    public function __invoke($price, $currency = 'CZK')
+    public function __invoke($price)
     {
-        switch ($currency) {
-            case 'CZK':
-                return number_format($price / 100, 0, '.', ' ') . ',-';
-                break;
-
-            default:
-                return number_format($price / 100, 0, '.', ' ') . ',-';
-                break;
-        }
+        return '$' . number_format($price / 100, 0, '.', ' ');
     }
 }

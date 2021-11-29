@@ -5,6 +5,7 @@ namespace App\Model\Facades;
 use App\Model\Entities\Category;
 use App\Model\Repositories\CategoryRepository;
 use Exception;
+use Tracy\Debugger;
 
 class CategoriesFacade
 {
@@ -45,6 +46,7 @@ class CategoriesFacade
         try {
             return (bool)$this->categoryRepository->delete($category);
         } catch (Exception $e) {
+            Debugger::log($e);
             return false;
         }
     }

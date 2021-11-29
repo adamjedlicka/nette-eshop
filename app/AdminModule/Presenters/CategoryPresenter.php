@@ -24,8 +24,10 @@ class CategoryPresenter extends BasePresenter
         } catch (\Exception $e) {
             $this->flashMessage('Category not found', 'error');
             $this->redirect('default');
+            return;
         }
-        $form = $this->getComponent('categoryEditForm');
+
+        $form = $this->getCategoryEditForm();
         $form->setDefaults($category);
         $this->template->category = $category;
     }
@@ -47,7 +49,7 @@ class CategoryPresenter extends BasePresenter
         }
 
         if ($this->categoriesFacade->deleteCategory($category)) {
-            $this->flashMessage('Kategorie byla smazána.', 'info');
+            $this->flashMessage('Category was deleted', 'info');
         } else {
             $this->flashMessage('This category cant be deleted', 'error');
         }
@@ -78,6 +80,11 @@ class CategoryPresenter extends BasePresenter
             $this->redirect('default');
         };
         return $form;
+    }
+
+    private function getCategoryEditForm(): CategoryEditForm
+    {
+        return $this->getComponent('categoryEditForm');
     }
 
     public function injectCategoriesFacade(CategoriesFacade $categoriesFacade)

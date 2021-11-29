@@ -13,6 +13,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Category</th>
                 <th scope="col">Price</th>
+                <th scope="col">URL</th>
                 <th scope="col" class="col-xl-1 col-md-2"></th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{$product->name}</td>
                 <td>{$product->category->name}</td>
                 <td>{$product->price|price}</td>
+                <td>{$product->slug}</td>
                 <td class="text-nowrap">
                     <a href="{plink Product:edit id:$product->id}" class="btn btn-sm btn-outline-primary">edit</a>
                     <a href="{plink Product:delete id:$product->id}" class="btn btn-sm btn-outline-danger {if !$user->isAllowed($product,'delete')}disabled{/if}">delete</a>

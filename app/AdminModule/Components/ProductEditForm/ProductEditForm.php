@@ -15,6 +15,9 @@ use Tracy\Debugger;
 
 class ProductEditForm extends Form
 {
+    /** @var callable[] */
+    public $onSuccess;
+
     private ProductsFacade $productsFacade;
 
     private CategoriesFacade $categoriesFacade;
@@ -41,8 +44,12 @@ class ProductEditForm extends Form
         $this->addText('name', 'Name')
             ->setRequired('Name is required');
 
-        $this->addInteger('price', 'Price')
+        $this->addText('price', 'Price')
+            ->addRule($this::FLOAT, 'Price has to be a number')
             ->setRequired('Price is required');
+
+        $this->addText('slug', 'Url path')
+            ->setHtmlAttribute('placeholder', 'Will be generated if left empty');
 
         $categories = [];
 
@@ -69,11 +76,14 @@ class ProductEditForm extends Form
                 $product = new Product();
             }
 
-            $product->assign($values, ['name', 'price']);
-            $product->slug = Strings::webalize($values['name']);
+            $product->name = $values['name'];
+            $product->price = (int) floor($values['price'] * 100);
+            $product->slug = $values['slug'] !== '' ? $values['slug'] : Strings::webalize($values['name']);
             $product->category = $this->categoriesFacade->getCategory($values['category']);
 
             $this->productsFacade->saveProduct($product);
+
+            $this->onSuccess();
         };
     }
 }
