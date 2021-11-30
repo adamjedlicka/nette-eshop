@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Nette\Application\BadRequestException;
 
-class EntityNotFoundException extends Exception
+class EntityNotFoundException extends BadRequestException
 {
 }
