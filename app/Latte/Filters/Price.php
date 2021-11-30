@@ -6,6 +6,6 @@ class Price
 {
     public function __invoke($price)
     {
-        return '$' . number_format($price / 100, 0, '.', ' ');
+        return '$' . number_format($price / 100, 2, '.', ' ');
     }
 }

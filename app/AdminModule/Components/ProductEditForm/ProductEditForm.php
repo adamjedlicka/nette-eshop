@@ -53,13 +53,13 @@ class ProductEditForm extends Form
             ->setRequired(false);
 
         $this->addText('price', 'Price')
-            ->addRule($this::FLOAT, 'Price has to be a number')
+            ->addRule(self::FLOAT, 'Price has to be a number')
             ->setRequired('Price is required');
 
         $this->addUpload('thumbnail', 'Thumbnail')
-            ->addRule($this::IMAGE, 'Thumbnail must be JPEG, PNG, GIF or WebP')
-            ->addRule($this::MAX_FILE_SIZE, 'Maximum size is 1 MB', 1024 * 1024)
-            ->setRequired('true');
+            ->addRule(self::IMAGE, 'Thumbnail must be JPEG, PNG, GIF or WebP')
+            ->addRule(self::MAX_FILE_SIZE, 'Maximum size is 1 MB', 1024 * 1024)
+            ->setRequired('Thumbnail is required');
 
         $this->addText('slug', 'Url path')
             ->setHtmlAttribute('placeholder', 'Will be generated if left empty')
