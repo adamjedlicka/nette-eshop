@@ -59,7 +59,7 @@ class ProductEditForm extends Form
         $this->addUpload('thumbnail', 'Thumbnail')
             ->addRule(self::IMAGE, 'Thumbnail must be JPEG, PNG, GIF or WebP')
             ->addRule(self::MAX_FILE_SIZE, 'Maximum size is 1 MB', 1024 * 1024)
-            ->setRequired('Thumbnail is required');
+            ->setRequired('thumbnail is required');
 
         $this->addText('slug', 'Url path')
             ->setHtmlAttribute('placeholder', 'Will be generated if left empty')
@@ -101,5 +101,28 @@ class ProductEditForm extends Form
 
             $this->onSuccess();
         };
+    }
+
+    /**
+     * Metoda pro nastavení výchozích hodnot formuláře
+     * @param Product|array|object $values
+     * @param bool $erase = false
+     * @return $this
+     */
+    public function setDefaults($values, bool $erase = false): self
+    {
+        if ($values instanceof Product) {
+            $values = [
+                'id' => $values->id,
+                'name' => $values->name,
+                'slug' => $values->slug,
+                'description' => $values->description,
+                'price' => $values->price,
+                'thumbnail' => $values->thumbnail,
+                'category' => $values->category->id,
+            ];
+        }
+        parent::setDefaults($values, $erase);
+        return $this;
     }
 }

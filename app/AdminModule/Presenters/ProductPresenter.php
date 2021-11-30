@@ -43,6 +43,28 @@ class ProductPresenter extends BasePresenter
         $this->redirect('default');
     }
 
+    public function actionEdit(int $id)
+    {
+        try {
+            $product = $this->productsFacade->getProduct($id);
+        } catch (Exception $e) {
+            $this->flashMessage('Product not found', 'error');
+            $this->redirect('default');
+        }
+
+        if (!$this->user->isAllowed($product, 'edit')) {
+            $this->flashMessage('This product cannot be edited', 'error');
+            $this->redirect('default');
+        }
+
+        $form = $this->createComponentProductEditForm();
+        $form = $form->setDefaults($product);
+        dump($form);
+
+        $this->template->product = $product;
+        $this->template->productEditForm = $form;
+    }
+
     public function createComponentProductEditForm(): ProductEditForm
     {
         $form = $this->productEditFormFactory->create();
