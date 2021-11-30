@@ -9,13 +9,13 @@ services:
       - server
       - db
   server:
-    image: caddy:alpine
+    image: caddy:2.4.5-alpine
     volumes:
       - .:/app
       - ./docker/Caddyfile:/etc/caddy/Caddyfile
     ports:
       - 8080:80
   db:
-    image: postgres:alpine
+    image: postgres:9.6.23-alpine3.14
     environment:
       - POSTGRES_PASSWORD=password

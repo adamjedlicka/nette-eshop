@@ -1,4 +1,4 @@
-FROM php:8-fpm-alpine
+FROM php:8.0.11-fpm-alpine3.14
 
 WORKDIR /app
 
@@ -8,9 +8,11 @@ RUN apk upgrade
 
 RUN apk add composer postgresql-dev
 
-RUN docker-php-ext-configure tokenizer
+RUN docker-php-source extract
 
-RUN docker-php-ext-install pdo pdo_pgsql intl tokenizer
+RUN docker-php-ext-install pdo pdo_pgsql intl
+
+RUN docker-php-source delete
 
 COPY composer.json composer.lock ./
 
