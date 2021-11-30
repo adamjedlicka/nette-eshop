@@ -11,10 +11,14 @@ class ProductsFacade
 {
     private ProductRepository $productRepository;
 
+    private ImagesFacade $imagesFacade;
+
     public function __construct(
         ProductRepository $productRepository,
+        ImagesFacade $imagesFacade,
     ) {
         $this->productRepository = $productRepository;
+        $this->imagesFacade = $imagesFacade;
     }
 
     public function getProduct(int $id): Product
@@ -40,7 +44,13 @@ class ProductsFacade
     public function deleteProduct(Product $product): bool
     {
         try {
-            return (bool)$this->productRepository->delete($product);
+            $ok = (bool)$this->productRepository->delete($product);
+
+            if ($ok) {
+                $this->imagesFacade->delete($product->thumbnail);
+            }
+
+            return $ok;
         } catch (Exception $e) {
             Debugger::log($e);
             return false;

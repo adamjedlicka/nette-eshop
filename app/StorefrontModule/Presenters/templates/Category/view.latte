@@ -15,6 +15,7 @@
     {foreach $category->products as $product}
     <div class="col-3">
         <div class="card">
+            <img src="{$product->thumbnail}" class="card-img-top" alt="{$product->name}">
             <div class="card-body">
                 <h2 class="card-title">{$product->name}</h2>
                 <p class="card-text">{$product->description}</p>

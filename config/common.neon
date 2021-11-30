@@ -36,6 +36,7 @@ services:
     - App\Model\Facades\UsersFacade
     - App\Model\Facades\CategoriesFacade
     - App\Model\Facades\ProductsFacade
+    - App\Model\Facades\ImagesFacade
 
     - App\Latte\Filters\Price
 
