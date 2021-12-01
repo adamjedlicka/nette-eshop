@@ -1,2 +1,3 @@
 vendor/
 config/local.neon
+docker-compose.override.yml
