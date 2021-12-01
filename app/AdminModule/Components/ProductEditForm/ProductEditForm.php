@@ -9,6 +9,8 @@ use App\Model\Facades\ProductsFacade;
 use Exception;
 use Nette\Application\UI\Form;
 use Nette\ComponentModel\IContainer;
+use Nette\Forms\Controls\UploadControl;
+use Nette\Utils\Image;
 use Nette\Utils\Strings;
 use Nextras\FormsRendering\Renderers\Bs5FormRenderer;
 use Nextras\FormsRendering\Renderers\FormLayout;
@@ -59,7 +61,7 @@ class ProductEditForm extends Form
         $this->addUpload('thumbnail', 'Thumbnail')
             ->addRule(self::IMAGE, 'Thumbnail must be JPEG, PNG, GIF or WebP')
             ->addRule(self::MAX_FILE_SIZE, 'Maximum size is 1 MB', 1024 * 1024)
-            ->setRequired('thumbnail is required');
+            ->setRequired(false);
 
         $this->addText('slug', 'Url path')
             ->setHtmlAttribute('placeholder', 'Will be generated if left empty')
@@ -93,7 +95,11 @@ class ProductEditForm extends Form
             $product->name = $values['name'];
             $product->description = $values['description'];
             $product->price = (int) floor($values['price'] * 100);
-            $product->thumbnail = $this->imagesFacade->save($values['thumbnail']);
+            if($values['thumbnail']->hasFile()){
+                $product->thumbnail = $this->imagesFacade->save($values['thumbnail']);
+            } elseif(empty($values['id'])){
+                $product->thumbnail = $this->imagesFacade->getPlaceholderImage();
+            }
             $product->slug = $values['slug'] !== '' ? $values['slug'] : Strings::webalize($values['name']);
             $product->category = $this->categoriesFacade->getCategory($values['category']);
 
@@ -118,7 +124,6 @@ class ProductEditForm extends Form
                 'slug' => $values->slug,
                 'description' => $values->description,
                 'price' => $values->price,
-                'thumbnail' => $values->thumbnail,
                 'category' => $values->category->id,
             ];
         }

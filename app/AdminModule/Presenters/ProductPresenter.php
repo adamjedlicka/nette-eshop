@@ -2,6 +2,7 @@
 
 namespace App\AdminModule\Presenters;
 
+use App\AdminModule\Components\CategoryEditForm\CategoryEditForm;
 use App\AdminModule\Components\ProductEditForm\ProductEditForm;
 use App\AdminModule\Components\ProductEditForm\ProductEditFormFactory;
 use App\Model\Facades\ProductsFacade;
@@ -57,12 +58,9 @@ class ProductPresenter extends BasePresenter
             $this->redirect('default');
         }
 
-        $form = $this->createComponentProductEditForm();
-        $form = $form->setDefaults($product);
-        dump($form);
-
+        $form = $this->getProductEditForm();
+        $form->setDefaults($product);
         $this->template->product = $product;
-        $this->template->productEditForm = $form;
     }
 
     public function createComponentProductEditForm(): ProductEditForm
@@ -74,6 +72,11 @@ class ProductPresenter extends BasePresenter
         };
 
         return $form;
+    }
+
+    private function getProductEditForm(): ProductEditForm
+    {
+        return $this->getComponent('productEditForm');
     }
 
     public function injectProductsFacade(ProductsFacade $productsFacade)
