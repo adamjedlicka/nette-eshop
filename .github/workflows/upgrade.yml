@@ -17,6 +17,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /root/eshop
-            ./upgrade.sh
+          script: bash eshop/upgrade.sh
