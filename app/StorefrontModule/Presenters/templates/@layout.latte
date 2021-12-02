@@ -8,7 +8,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100" style="overflow-y: scroll">
     <div style="position: fixed; right: 0; top: 0; z-index: 10; padding: 1rem; margin-top: 4rem;">
         {foreach $flashes as $flash}
         <div class="alert alert-{$flash->type=='error'?'danger':$flash->type} alert-dismissible fade show" role="alert">
@@ -20,9 +20,20 @@
 
 	{control header}
 
-	<div n:snippet="content" class="container">
+	<div n:snippet="content" class="container flex-grow-1">
 		{include content}
 	</div>
+
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+        <p class="text-center text-muted">© 2021 Adam Jedlička & Onřej Michálek</p>
+  </footer>
 
 	{block scripts}
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
