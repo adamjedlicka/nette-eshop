@@ -5,6 +5,8 @@ namespace App\AdminModule\Presenters;
 use App\AdminModule\Components\CategoryEditForm\CategoryEditForm;
 use App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory;
 use App\Model\Facades\CategoriesFacade;
+use Exception;
+use Tracy\Debugger;
 
 class CategoryPresenter extends BasePresenter
 {
@@ -21,14 +23,15 @@ class CategoryPresenter extends BasePresenter
     {
         try {
             $category = $this->categoriesFacade->getCategory($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            Debugger::log($e);
             $this->flashMessage('Category not found', 'error');
             $this->redirect('default');
-            return;
         }
 
         $form = $this->getCategoryEditForm();
         $form->setDefaults($category);
+
         $this->template->category = $category;
     }
 
@@ -36,16 +39,15 @@ class CategoryPresenter extends BasePresenter
     {
         try {
             $category = $this->categoriesFacade->getCategory($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            Debugger::log($e);
             $this->flashMessage('Category not found', 'error');
             $this->redirect('default');
-            return;
         }
 
         if (!$this->user->isAllowed($category, 'delete')) {
             $this->flashMessage('This category cant be deleted', 'error');
             $this->redirect('default');
-            return;
         }
 
         if ($this->categoriesFacade->deleteCategory($category)) {
@@ -57,28 +59,28 @@ class CategoryPresenter extends BasePresenter
         $this->redirect('default');
     }
 
-    /**
-     * Formulář na editaci kategorií
-     * @return CategoryEditForm
-     */
     public function createComponentCategoryEditForm(): CategoryEditForm
     {
         $form = $this->categoryEditFormFactory->create();
+
         $form->onCancel[] = function () {
             $this->redirect('default');
         };
+
         $form->onFinished[] = function ($message = null) {
             if (!empty($message)) {
                 $this->flashMessage($message);
             }
             $this->redirect('default');
         };
+
         $form->onFailed[] = function ($message = null) {
             if (!empty($message)) {
                 $this->flashMessage($message, 'error');
             }
             $this->redirect('default');
         };
+
         return $form;
     }
 

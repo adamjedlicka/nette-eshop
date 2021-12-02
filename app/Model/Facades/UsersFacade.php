@@ -3,6 +3,7 @@
 namespace App\Model\Facades;
 
 use App\Model\Authorizator\AuthenticatedRole;
+use App\Model\Entities\Role;
 use App\Model\Entities\User;
 use App\Model\Repositories\ForgottenPasswordRepository;
 use App\Model\Repositories\PermissionRepository;
@@ -86,6 +87,14 @@ class UsersFacade
     public function findResources(): array
     {
         return $this->resourceRepository->findAll();
+    }
+
+    /**
+     * @return Role
+     */
+    public function findRole(string $id): Role
+    {
+        return $this->roleRepository->find($id);
     }
 
     /**

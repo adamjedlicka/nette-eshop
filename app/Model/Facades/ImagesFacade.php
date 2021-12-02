@@ -17,7 +17,6 @@ class ImagesFacade
     public function getPlaceholderImage(): string
     {
         return '/images/placeholder.png';
-
     }
 
     public function save(FileUpload $image)

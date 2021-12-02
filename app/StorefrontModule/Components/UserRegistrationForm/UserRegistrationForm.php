@@ -52,12 +52,15 @@ class UserRegistrationForm extends Form
                 return false;
             }, 'User with this email already exists');
 
-        $password = $this->addPassword('password', 'Password');
-        $password
+        $password = $this->addPassword('password', 'Password')
             ->setRequired('Enter password')
             ->addRule(Form::MIN_LENGTH, 'Enter is too short', 5);
+
         $this->addPassword('password2', 'Password confirmation')
             ->addRule(Form::EQUAL, 'Passwords do not match', $password);
+
+        $this->addSelect('role', 'Role', ['authenticated' => 'Authenticated', 'admin' => 'Admin',])
+            ->setRequired('Role is required');
 
         $this->addSubmit('ok', 'Register')
             ->onClick[] = function (SubmitButton $button) {
@@ -66,14 +69,7 @@ class UserRegistrationForm extends Form
             $user->name = $values['name'];
             $user->email = $values['email'];
             $user->password = $this->passwords->hash($values['password']);
-
-            if ($values['email'] === 'admin@admin.admin') {
-                foreach ($this->usersFacade->findRoles() as $role) {
-                    if ($role->id === 'admin') {
-                        $user->role = $role;
-                    }
-                }
-            }
+            $user->role = $this->usersFacade->findRole($values['role']);
 
             $this->usersFacade->saveUser($user);
 

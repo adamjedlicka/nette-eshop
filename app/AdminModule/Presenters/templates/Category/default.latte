@@ -11,6 +11,7 @@
         <thead>
             <tr>
                 <th scope="col">Name</th>
+                <th scope="col">URL</th>
                 <th scope="col" class="col-xl-1 col-md-2"></th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
             {foreach $categories as $category}
             <tr>
                 <td>{$category->name}</td>
+                <td>{$category->slug}</td>
                 <td class="text-nowrap">
                     <a href="{plink Category:edit id:$category->id}" class="btn btn-sm btn-outline-primary">edit</a>
                     <a href="{plink Category:delete id:$category->id}" class="btn btn-sm btn-outline-danger {if !$user->isAllowed($category,'delete')}disabled{/if}">delete</a>

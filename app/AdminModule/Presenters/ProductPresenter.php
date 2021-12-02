@@ -2,11 +2,11 @@
 
 namespace App\AdminModule\Presenters;
 
-use App\AdminModule\Components\CategoryEditForm\CategoryEditForm;
 use App\AdminModule\Components\ProductEditForm\ProductEditForm;
 use App\AdminModule\Components\ProductEditForm\ProductEditFormFactory;
 use App\Model\Facades\ProductsFacade;
 use Exception;
+use Tracy\Debugger;
 
 class ProductPresenter extends BasePresenter
 {
@@ -24,15 +24,14 @@ class ProductPresenter extends BasePresenter
         try {
             $product = $this->productsFacade->getProduct($id);
         } catch (Exception $e) {
+            Debugger::log($e);
             $this->flashMessage('Product not found', 'error');
             $this->redirect('default');
-            return;
         }
 
         if (!$this->user->isAllowed($product, 'delete')) {
             $this->flashMessage('This product cant be deleted', 'error');
             $this->redirect('default');
-            return;
         }
 
         if ($this->productsFacade->deleteProduct($product)) {
@@ -49,6 +48,7 @@ class ProductPresenter extends BasePresenter
         try {
             $product = $this->productsFacade->getProduct($id);
         } catch (Exception $e) {
+            Debugger::log($e);
             $this->flashMessage('Product not found', 'error');
             $this->redirect('default');
         }
@@ -60,6 +60,7 @@ class ProductPresenter extends BasePresenter
 
         $form = $this->getProductEditForm();
         $form->setDefaults($product);
+
         $this->template->product = $product;
     }
 

@@ -9,8 +9,6 @@ use App\Model\Facades\ProductsFacade;
 use Exception;
 use Nette\Application\UI\Form;
 use Nette\ComponentModel\IContainer;
-use Nette\Forms\Controls\UploadControl;
-use Nette\Utils\Image;
 use Nette\Utils\Strings;
 use Nextras\FormsRendering\Renderers\Bs5FormRenderer;
 use Nextras\FormsRendering\Renderers\FormLayout;
