@@ -123,7 +123,7 @@ class ProductEditForm extends Form
                 'name' => $values->name,
                 'slug' => $values->slug,
                 'description' => $values->description,
-                'price' => $values->price,
+                'price' => $values->price / 100,
                 'category' => $values->category->id,
             ];
         }
