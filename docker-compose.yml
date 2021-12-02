@@ -3,16 +3,16 @@ services:
   app:
     build: .
     volumes:
-      - .:/app
-      - ./docker/zzz-docker.conf:/usr/local/etc/php-fpm.d/zzz-docker.conf
+      - .:/app:z
+      - ./docker/zzz-docker.conf:/usr/local/etc/php-fpm.d/zzz-docker.conf:z
     depends_on:
       - server
       - db
   server:
     image: caddy:2.4.5-alpine
     volumes:
-      - .:/app
-      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+      - .:/app:z
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:z
     ports:
       - 8080:80
   db:
