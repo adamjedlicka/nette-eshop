@@ -1,0 +1,22 @@
+name: Upgrade
+
+on:
+  push:
+    branches: ['**']
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /root/eshop
+            ./upgrade.sh
