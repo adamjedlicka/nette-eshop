@@ -32,17 +32,21 @@ services:
     - App\Model\Repositories\ForgottenPasswordRepository
     - App\Model\Repositories\ProductRepository
     - App\Model\Repositories\CategoryRepository
+    - App\Model\Repositories\CartRepository
+    - App\Model\Repositories\CartItemRepository
 
     - App\Model\Facades\UsersFacade
     - App\Model\Facades\CategoriesFacade
     - App\Model\Facades\ProductsFacade
     - App\Model\Facades\ImagesFacade
+    - App\Model\Facades\CartsFacade
 
     - App\Latte\Filters\Price
 
     - App\StorefrontModule\Components\Header\HeaderFactory
     - App\StorefrontModule\Components\UserLoginForm\UserLoginFormFactory
     - App\StorefrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
+    - App\StorefrontModule\Components\CartControl\CartControlFactory
 
     - App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory
     - App\AdminModule\Components\ProductEditForm\ProductEditFormFactory
