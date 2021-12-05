@@ -24,5 +24,21 @@ final class CreateValueTable extends AbstractMigration
             ->addColumn('attribute_id', 'integer')
             ->addForeignKey('attribute_id', 'attribute', 'id')
             ->create();
+
+            if ($this->isMigratingUp()) {
+                $this->table('resource')
+                    ->insert([
+                        ['id' => 'Admin:Value'],
+                        ['id' => 'Value'],
+                    ])
+                    ->saveData();
+
+                $this->table('permission')
+                    ->insert([
+                        ['role_id' =>  'admin', 'resource_id' => 'Admin:Value', 'action' => '', 'type' => 'allow'],
+                        ['role_id' =>  'admin', 'resource_id' => 'Value', 'action' => '', 'type' => 'allow'],
+                    ])
+                    ->saveData();
+            }
     }
 }
