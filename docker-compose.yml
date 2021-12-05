@@ -16,12 +16,15 @@ services:
     ports:
       - 8080:80
   db:
-    image: postgres:9.6.23-alpine3.14
+    image: mysql:8.0.27
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db:/var/lib/mysql
     environment:
-      - POSTGRES_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=database
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
 
 volumes:
-  db-data:
+  db:
     driver: local

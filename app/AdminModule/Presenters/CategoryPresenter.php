@@ -63,21 +63,7 @@ class CategoryPresenter extends BasePresenter
     {
         $form = $this->categoryEditFormFactory->create();
 
-        $form->onCancel[] = function () {
-            $this->redirect('default');
-        };
-
-        $form->onFinished[] = function ($message = null) {
-            if (!empty($message)) {
-                $this->flashMessage($message);
-            }
-            $this->redirect('default');
-        };
-
-        $form->onFailed[] = function ($message = null) {
-            if (!empty($message)) {
-                $this->flashMessage($message, 'error');
-            }
+        $form->onSuccess[] = function () {
             $this->redirect('default');
         };
 

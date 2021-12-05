@@ -21,7 +21,7 @@ final class CreateAttributeTable extends AbstractMigration
     {
         $this->table('attribute')
             ->addColumn('name', 'string')
-            ->addColumn('description', 'text', ['default' => ''])
+            ->addColumn('description', 'text')
             ->create();
 
         if ($this->isMigratingUp()) {

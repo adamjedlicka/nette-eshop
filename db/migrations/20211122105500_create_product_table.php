@@ -23,7 +23,7 @@ final class CreateProductTable extends AbstractMigration
             ->addColumn('name', 'string')
             ->addColumn('slug', 'string')
             ->addIndex('slug', ['unique' => true])
-            ->addColumn('description', 'text', ['default' => ''])
+            ->addColumn('description', 'text')
             ->addColumn('price', 'integer')
             ->addColumn('thumbnail', 'string', ['null' => 'true'])
             ->addColumn('category_id', 'integer')

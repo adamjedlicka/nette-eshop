@@ -23,7 +23,7 @@ final class CreateCategoryTable extends AbstractMigration
             ->addColumn('name', 'string')
             ->addColumn('slug', 'string')
             ->addIndex('slug', ['unique' => true])
-            ->addColumn('description', 'text', ['default' => ''])
+            ->addColumn('description', 'text')
             ->create();
     }
 }

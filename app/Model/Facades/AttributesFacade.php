@@ -27,6 +27,9 @@ class AttributesFacade
         return (bool)$this->attributeRepository->persist($attribute);
     }
 
+    /**
+     * @return Attribute[]
+     */
     public function findAttributes(): array
     {
         return $this->attributeRepository->findAll();
