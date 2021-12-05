@@ -4,6 +4,8 @@ namespace App\AdminModule\Presenters;
 
 use App\AdminModule\Components\ProductEditForm\ProductEditForm;
 use App\AdminModule\Components\ProductEditForm\ProductEditFormFactory;
+use App\AdminModule\Components\ProductValueEditForm\ProductValueEditForm;
+use App\AdminModule\Components\ProductValueEditForm\ProductValueEditFormFactory;
 use App\Model\Facades\ProductsFacade;
 use Exception;
 use Tracy\Debugger;
@@ -14,9 +16,20 @@ class ProductPresenter extends BasePresenter
 
     private ProductEditFormFactory $productEditFormFactory;
 
+    private ProductValueEditFormFactory $productValueEditFormFactory;
+
     public function renderDefault()
     {
         $this->template->products = $this->productsFacade->findProducts();
+    }
+
+    public function actionValues(int $id)
+    {
+        $product = $this->productsFacade->getProduct($id);
+
+        $this->getProductValueEditForm()->createSubcomponents($product);
+
+        $this->template->product = $product;
     }
 
     public function actionDelete(int $id)
@@ -75,9 +88,25 @@ class ProductPresenter extends BasePresenter
         return $form;
     }
 
+    public function createComponentProductValueEditForm(): ProductValueEditForm
+    {
+        $form = $this->productValueEditFormFactory->create();
+
+        $form->onSuccess[] = function () {
+            $this->redirect('default');
+        };
+
+        return $form;
+    }
+
     private function getProductEditForm(): ProductEditForm
     {
         return $this->getComponent('productEditForm');
+    }
+
+    private function getProductValueEditForm(): ProductValueEditForm
+    {
+        return $this->getComponent('productValueEditForm');
     }
 
     public function injectProductsFacade(ProductsFacade $productsFacade)
@@ -88,5 +117,10 @@ class ProductPresenter extends BasePresenter
     public function injectProductEditFormFactory(ProductEditFormFactory $productEditFormFactory)
     {
         $this->productEditFormFactory = $productEditFormFactory;
+    }
+
+    public function injectProductValueEditFormFactory(ProductValueEditFormFactory $productValueEditFormFactory)
+    {
+        $this->productValueEditFormFactory = $productValueEditFormFactory;
     }
 }

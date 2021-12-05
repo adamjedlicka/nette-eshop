@@ -21,8 +21,8 @@
                 <td>{$value->name}</td>
                 <td>{$value->attribute->name}</td>
                 <td class="text-nowrap">
-                    <a href="{plink Product:edit id:$value->id}" class="btn btn-sm btn-outline-primary">edit</a>
-                    <a href="{plink Product:delete id:$value->id}" class="btn btn-sm btn-outline-danger {if !$user->isAllowed($value,'delete')}disabled{/if}">delete</a>
+                    <a href="{plink Value:edit id:$value->id}" class="btn btn-sm btn-outline-primary">edit</a>
+                    <a href="{plink Value:delete id:$value->id}" class="btn btn-sm btn-outline-danger {if !$user->isAllowed($value,'delete')}disabled{/if}">delete</a>
                 </td>
             </tr>
             {/foreach}

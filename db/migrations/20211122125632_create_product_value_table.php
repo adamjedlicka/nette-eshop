@@ -24,6 +24,7 @@ final class CreateProductValueTable extends AbstractMigration
             ->addForeignKey('product_id', 'product', 'id')
             ->addColumn('value_id', 'integer')
             ->addForeignKey('value_id', 'value', 'id')
+            ->addIndex(['product_id', 'value_id'], ['unique' => true])
             ->create();
     }
 }

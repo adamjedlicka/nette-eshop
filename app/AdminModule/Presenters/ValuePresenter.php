@@ -5,6 +5,8 @@ namespace App\AdminModule\Presenters;
 use App\AdminModule\Components\ValueEditForm\ValueEditForm;
 use App\AdminModule\Components\ValueEditForm\ValueEditFormFactory;
 use App\Model\Facades\ValuesFacade;
+use Exception;
+use Tracy\Debugger;
 
 class ValuePresenter extends BasePresenter
 {
@@ -15,6 +17,51 @@ class ValuePresenter extends BasePresenter
     public function renderDefault()
     {
         $this->template->values = $this->valuesFacade->findValues();
+    }
+
+    public function actionDelete(int $id)
+    {
+        try {
+            $value = $this->valuesFacade->getValue($id);
+        } catch (Exception $e) {
+            Debugger::log($e);
+            $this->flashMessage('Value not found', 'error');
+            $this->redirect('default');
+        }
+
+        if (!$this->user->isAllowed($value, 'delete')) {
+            $this->flashMessage('This value cant be deleted', 'error');
+            $this->redirect('default');
+        }
+
+        if ($this->valuesFacade->deleteValue($value)) {
+            $this->flashMessage('Value was deleted', 'info');
+        } else {
+            $this->flashMessage('This value cant be deleted', 'error');
+        }
+
+        $this->redirect('default');
+    }
+
+    public function actionEdit(int $id)
+    {
+        try {
+            $value = $this->valuesFacade->getValue($id);
+        } catch (Exception $e) {
+            Debugger::log($e);
+            $this->flashMessage('Value not found', 'error');
+            $this->redirect('default');
+        }
+
+        if (!$this->user->isAllowed($value, 'edit')) {
+            $this->flashMessage('This value cannot be edited', 'error');
+            $this->redirect('default');
+        }
+
+        $form = $this->getValueEditForm();
+        $form->setDefaults($value);
+
+        $this->template->value = $value;
     }
 
     public function createComponentValueEditForm(): ValueEditForm
