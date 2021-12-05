@@ -23,5 +23,21 @@ final class CreateAttributeTable extends AbstractMigration
             ->addColumn('name', 'string')
             ->addColumn('description', 'text', ['default' => ''])
             ->create();
+
+        if ($this->isMigratingUp()) {
+            $this->table('resource')
+                ->insert([
+                    ['id' => 'Admin:Attribute'],
+                    ['id' => 'Attribute'],
+                ])
+                ->saveData();
+
+            $this->table('permission')
+                ->insert([
+                    ['role_id' =>  'admin', 'resource_id' => 'Admin:Attribute', 'action' => '', 'type' => 'allow'],
+                    ['role_id' =>  'admin', 'resource_id' => 'Attribute', 'action' => '', 'type' => 'allow'],
+                ])
+                ->saveData();
+        }
     }
 }
