@@ -12,17 +12,16 @@ class ProductRepository extends BaseRepository
         return parent::findBy($cond);
     }
 
-    public function getByFilteredCategory(Category $category, $valueId = null)
+    public function getByFilteredCategory(Category $category, $values = null)
     {
-        if (!$valueId) {
+        if (!$values) {
             return $category->products;
         }
 
         $rows = $this->connection->select('product.*')->from('product')
-            ->join('category_product')->on('category_product.product_id', '=', 'product.id')
             ->join('product_value')->on('product_value.product_id', '=', 'product.id')
-            ->where('category_product.category_id', '=', $category->id)
-            ->where('product_value.value_id', '=', $valueId)
+            ->where('product.category_id', '=', $category->id)
+            ->where('product_value.value_id', 'IN', '(' . implode(', ', $values) . ')')
             ->fetchAll();
 
         return $this->createEntities($rows);

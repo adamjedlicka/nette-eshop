@@ -47,6 +47,7 @@ services:
     - App\StorefrontModule\Components\Header\HeaderFactory
     - App\StorefrontModule\Components\UserLoginForm\UserLoginFormFactory
     - App\StorefrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
+    - App\StorefrontModule\Components\FiltersControl\FiltersControlFactory
 
     - App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory
     - App\AdminModule\Components\ProductEditForm\ProductEditFormFactory
