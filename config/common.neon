@@ -43,6 +43,7 @@ services:
     - App\Model\Facades\ValuesFacade
 
     - App\Latte\Filters\Price
+    - App\Latte\Filters\Excerpt
 
     - App\StorefrontModule\Components\Header\HeaderFactory
     - App\StorefrontModule\Components\UserLoginForm\UserLoginFormFactory
@@ -58,3 +59,4 @@ services:
     nette.latteFactory:
         setup:
             - addFilter(price, @App\Latte\Filters\Price)
+            - addFilter(excerpt, @App\Latte\Filters\Excerpt)
