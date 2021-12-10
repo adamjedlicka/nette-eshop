@@ -25,6 +25,7 @@
                 <td>{$product->price|price}</td>
                 <td>{$product->slug}</td>
                 <td class="text-nowrap">
+                    <a href="{plink Product:values id:$product->id}" class="btn btn-sm btn-outline-primary">values</a>
                     <a href="{plink Product:edit id:$product->id}" class="btn btn-sm btn-outline-primary">edit</a>
                     <a href="{plink Product:delete id:$product->id}" class="btn btn-sm btn-outline-danger {if !$user->isAllowed($product,'delete')}disabled{/if}">delete</a>
                 </td>

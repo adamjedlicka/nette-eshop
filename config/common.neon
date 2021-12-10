@@ -4,7 +4,7 @@ extensions:
 leanmapper:
     db:
         driver: pdo
-        dsn: 'pgsql:host=db;port=5432;dbname=postgres;user=postgres;password=password'
+        dsn: 'mysql:host=db;port=3306;dbname=database;user=user;password=password'
 
 application:
     errorPresenter: Error
@@ -34,23 +34,33 @@ services:
     - App\Model\Repositories\CategoryRepository
     - App\Model\Repositories\CartRepository
     - App\Model\Repositories\CartItemRepository
+    - App\Model\Repositories\AttributeRepository
+    - App\Model\Repositories\ValueRepository
 
     - App\Model\Facades\UsersFacade
     - App\Model\Facades\CategoriesFacade
     - App\Model\Facades\ProductsFacade
     - App\Model\Facades\ImagesFacade
     - App\Model\Facades\CartsFacade
+    - App\Model\Facades\AttributesFacade
+    - App\Model\Facades\ValuesFacade
 
     - App\Latte\Filters\Price
+    - App\Latte\Filters\Excerpt
 
     - App\StorefrontModule\Components\Header\HeaderFactory
     - App\StorefrontModule\Components\UserLoginForm\UserLoginFormFactory
     - App\StorefrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
     - App\StorefrontModule\Components\CartControl\CartControlFactory
+    - App\StorefrontModule\Components\FiltersControl\FiltersControlFactory
 
     - App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory
     - App\AdminModule\Components\ProductEditForm\ProductEditFormFactory
+    - App\AdminModule\Components\AttributeEditForm\AttributeEditFormFactory
+    - App\AdminModule\Components\ValueEditForm\ValueEditFormFactory
+    - App\AdminModule\Components\ProductValueEditForm\ProductValueEditFormFactory
 
     nette.latteFactory:
         setup:
             - addFilter(price, @App\Latte\Filters\Price)
+            - addFilter(excerpt, @App\Latte\Filters\Excerpt)

@@ -8,6 +8,22 @@
     </ol>
 </nav>
 
-<h1 class="title" n:block="title">{$product->name}</h1>
+<div class="row">
+    <div class="col-12 col-md-6">
+        <img src="{$product->thumbnail}" class="img-thumbnail w-100" alt="{$product->name}" style="object-fit: contain; aspect-ratio: 1 / 1">
+    </div>
 
-<div>{$product->description}</div>
+    <div class="col col-md-6">
+        <h1 class="title" n:block="title">{$product->name}</h1>
+
+        <h2 class="subtitle">{$product->price|price}</h2>
+
+        <div class="mt-4">{$product->description}</div>
+
+        <ul class="list-group mt-4">
+            {foreach $product->getGrouppedValues() as $attribute => $values}
+            <li class="list-group-item"><strong>{$attribute}:</strong> {implode(', ', $values)}</li>
+            {/foreach}
+        </ul>
+    </div>
+</div>

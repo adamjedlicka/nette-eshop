@@ -1,0 +1,33 @@
+{block content}
+
+<h1 n:block="title">Values</h1>
+
+<div class="my-4">
+    <a href="{link add}" class="btn btn-primary">New value</a>
+</div>
+
+{if !empty($values)}
+    <table class="table table-hover mt-4">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Attribute</th>
+                <th scope="col" class="col-xl-1 col-md-2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach $values as $value}
+            <tr>
+                <td>{$value->name}</td>
+                <td>{$value->attribute->name}</td>
+                <td class="text-nowrap">
+                    <a href="{plink Value:edit id:$value->id}" class="btn btn-sm btn-outline-primary">edit</a>
+                    <a href="{plink Value:delete id:$value->id}" class="btn btn-sm btn-outline-danger {if !$user->isAllowed($value,'delete')}disabled{/if}">delete</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+{else}
+    <p class="text-muted">No values were found</p>
+{/if}

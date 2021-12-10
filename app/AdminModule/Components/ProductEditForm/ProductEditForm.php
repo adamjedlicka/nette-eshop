@@ -65,13 +65,7 @@ class ProductEditForm extends Form
             ->setHtmlAttribute('placeholder', 'Will be generated if left empty')
             ->setRequired(false);
 
-        $categories = [];
-
-        foreach ($this->categoriesFacade->findCategories() as $category) {
-            $categories[$category->id] = $category->name;
-        }
-
-        $this->addSelect('category', 'Category', $categories)
+        $this->addSelect('category', 'Category', $this->getCategories())
             ->setRequired('Category is required');
 
         $this->addSubmit('ok', 'Save')
@@ -93,9 +87,9 @@ class ProductEditForm extends Form
             $product->name = $values['name'];
             $product->description = $values['description'];
             $product->price = (int) floor($values['price'] * 100);
-            if($values['thumbnail']->hasFile()){
+            if ($values['thumbnail']->hasFile()) {
                 $product->thumbnail = $this->imagesFacade->save($values['thumbnail']);
-            } elseif(empty($values['id'])){
+            } elseif (empty($values['id'])) {
                 $product->thumbnail = $this->imagesFacade->getPlaceholderImage();
             }
             $product->slug = $values['slug'] !== '' ? $values['slug'] : Strings::webalize($values['name']);
@@ -107,12 +101,6 @@ class ProductEditForm extends Form
         };
     }
 
-    /**
-     * Metoda pro nastavení výchozích hodnot formuláře
-     * @param Product|array|object $values
-     * @param bool $erase = false
-     * @return $this
-     */
     public function setDefaults($values, bool $erase = false): self
     {
         if ($values instanceof Product) {
@@ -125,7 +113,20 @@ class ProductEditForm extends Form
                 'category' => $values->category->id,
             ];
         }
+
         parent::setDefaults($values, $erase);
+
         return $this;
+    }
+
+    private function getCategories()
+    {
+        $categories = [];
+
+        foreach ($this->categoriesFacade->findCategories() as $category) {
+            $categories[$category->id] = $category->name;
+        }
+
+        return $categories;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Model\Facades;
 
+use App\Model\Entities\Category;
 use App\Model\Entities\Product;
 use App\Model\Repositories\ProductRepository;
 use Exception;
@@ -55,5 +56,10 @@ class ProductsFacade
             Debugger::log($e);
             return false;
         }
+    }
+
+    public function getCategoryProducts(Category $category, $values): array
+    {
+        return $this->productRepository->getByFilteredCategory($category, $values);
     }
 }

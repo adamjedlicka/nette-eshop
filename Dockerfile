@@ -6,11 +6,11 @@ RUN apk update
 
 RUN apk upgrade
 
-RUN apk add composer postgresql-dev
+RUN apk add composer icu-dev
 
 RUN docker-php-source extract
 
-RUN docker-php-ext-install pdo pdo_pgsql intl
+RUN docker-php-ext-install pdo pdo_mysql intl
 
 RUN docker-php-source delete
 
