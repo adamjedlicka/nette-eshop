@@ -1,5 +1,15 @@
+{varType App\Model\Entities\Product $product}
+
 {block content}
 
 <h1 n:block="title">Edit product "{$product->name}"</h1>
 
 {control productEditForm}
+
+<div class="row">
+    <hr>
+    <div class="col-12">
+        <p>Current thumbnail:</p>
+        <img src="{$product->thumbnail}" height="400">
+    </div>
+</div>

@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
     <div class="container">
-        <a class="ajax navbar-brand" href="/">Eshop</a>
+        <a class="ajax navbar-brand" href="/">
+            <img src="/images/logo.png" height="50">
+            Eshop
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -16,7 +19,7 @@
                 {if $user->isAllowed('Admin:Dashboard', 'view')}
                     <a class="btn btn-outline-secondary me-2" href="{plink :Admin:Dashboard:default}">Admin</a>
                 {/if}
-                <a class="ajax btn btn-outline-secondary me-2" href="{plink User:default}">Account</a>
+                <a class="ajax btn btn-outline-secondary me-2" href="{plink User:default}">{$user->identity->name}</a>
             {else}
                 <a class="ajax btn btn-outline-secondary me-2" href="{plink User:login}">Login</a>
             {/if}
