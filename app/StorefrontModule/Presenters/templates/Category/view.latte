@@ -27,6 +27,9 @@
                         <strong>{$product->price|price}</strong>
                         <p class="card-text flex-grow-1">{$product->description|excerpt}</p>
                         <a href="{plink Product:view $product->slug}" class="ajax btn btn-primary">Detail</a>
+                        <div>
+                            {control "productCartForm-$product->id"}
+                        </div>
                     </div>
                 </div>
             </div>

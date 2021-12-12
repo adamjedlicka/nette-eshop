@@ -16,10 +16,11 @@
                 {if $user->isAllowed('Admin:Dashboard', 'view')}
                     <a class="btn btn-outline-secondary me-2" href="{plink :Admin:Dashboard:default}">Admin</a>
                 {/if}
-                <a class="ajax btn btn-outline-secondary" href="{plink User:default}">Account</a>
+                <a class="ajax btn btn-outline-secondary me-2" href="{plink User:default}">Account</a>
             {else}
-                <a class="ajax btn btn-outline-secondary" href="{plink User:login}">Login</a>
+                <a class="ajax btn btn-outline-secondary me-2" href="{plink User:login}">Login</a>
             {/if}
+            {control cart}
         </div>
     </div>
 </nav>
