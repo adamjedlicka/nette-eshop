@@ -20,9 +20,12 @@
 
         <div class="mt-4">{$product->description}</div>
 
-        <ul class="list-group mt-4">
+        <table class="table mt-4">
             {foreach $product->getGrouppedValues() as $attribute => $values}
-            <li class="list-group-item"><strong>{$attribute}:</strong> {implode(', ', $values)}</li>
+                <tr>
+                    <td><strong>{$attribute}</strong></td>
+                    <td>{implode(', ', $values)}</td>
+                </tr>
             {/foreach}
         </ul>
 
