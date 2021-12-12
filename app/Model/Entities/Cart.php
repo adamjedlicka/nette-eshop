@@ -7,7 +7,7 @@ use Dibi\DateTime;
 /**
  * @property int $id
  * @property User $user m:hasOne
- * @property CartItem[] $items m:belongsToMany
+ * @property CartItem[] $cartItems m:belongsToMany
  * @property DateTime $modified
  *
  * @method addToItems(CartItem $cartItem)
@@ -16,13 +16,18 @@ use Dibi\DateTime;
  */
 class Cart extends BaseEntity
 {
+    public function updateCartItems()
+    {
+        $this->row->cleanReferencedRowsCache(
+            'cart_item'
+        ); //smažeme cache, aby se položky v košíku znovu načetly z DB bez nutnosti načtení celého košíku
+    }
+
     public function getTotalCount(): int
     {
-        if (empty($this->items)) return 0;
-
         $result = 0;
 
-        foreach ($this->items as $item) {
+        foreach ($this->cartItems as $item) {
             $result += $item->quantity;
         }
 
@@ -31,14 +36,34 @@ class Cart extends BaseEntity
 
     public function getTotalPrice(): int
     {
-        if (empty($this->items)) return 0;
-
         $result = 0;
 
-        foreach ($this->items as $item) {
+        foreach ($this->cartItems as $item) {
             $result += $item->product->price * $item->quantity;
         }
 
         return $result;
+    }
+
+    public function hasItemWithProduct(Product $product): bool
+    {
+        foreach ($this->cartItems as $cartItem) {
+            if ($cartItem->product->id === $product->id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function getItemWithProduct(Product $product): CartItem
+    {
+        foreach ($this->cartItems as $cartItem) {
+            if ($cartItem->product->id === $product->id) {
+                return $cartItem;
+            }
+        }
+
+        throw new \Exception('no cart item with product ' . $product->id);
     }
 }

@@ -4,8 +4,12 @@ namespace App\StorefrontModule\Presenters;
 
 use App\Model\Facades\CategoriesFacade;
 use App\Model\Facades\ProductsFacade;
+use App\StorefrontModule\Components\CartControl\CartControl;
 use App\StorefrontModule\Components\FiltersControl\FiltersControl;
 use App\StorefrontModule\Components\FiltersControl\FiltersControlFactory;
+use App\StorefrontModule\Components\ProductCartForm\ProductCartForm;
+use App\StorefrontModule\Components\ProductCartForm\ProductCartFormFactory;
+use Nette\Application\UI\Multiplier;
 
 class CategoryPresenter extends BasePresenter
 {
@@ -14,6 +18,22 @@ class CategoryPresenter extends BasePresenter
     private ProductsFacade $productsFacade;
 
     private FiltersControlFactory $filtersControlFactory;
+    private ProductCartFormFactory $productCartFormFactory;
+
+    public function __construct(
+        CategoriesFacade $categoriesFacade,
+        ProductsFacade $productsFacade,
+        FiltersControlFactory $filtersControlFactory,
+        ProductCartFormFactory $productCartFormFactory,
+    )
+    {
+        parent::__construct();
+
+        $this->categoriesFacade = $categoriesFacade;
+        $this->productsFacade = $productsFacade;
+        $this->filtersControlFactory = $filtersControlFactory;
+        $this->productCartFormFactory = $productCartFormFactory;
+    }
 
     public function actionView($slug, $values)
     {
@@ -26,6 +46,8 @@ class CategoryPresenter extends BasePresenter
             $this->redirect('view', $slug, json_encode($values));
         };
 
+        $this->getComponent('productCartForm');
+
         $this->template->category = $category;
         $this->template->products = $products;
     }
@@ -35,23 +57,33 @@ class CategoryPresenter extends BasePresenter
         return $this->filtersControlFactory->create();
     }
 
+    protected function createComponentProductCartForm(): Multiplier
+    {
+        return new Multiplier(function ($productId) {
+            /** @var CartControl $cart */
+            $cart = $this->getComponent('cart');
+
+            $product = $this->productsFacade->getProduct($productId);
+
+
+            $form = $this->productCartFormFactory->create();
+            $form->setDefaults(['id' => $product->id]);
+            $form['quantity']->setHtmlAttribute('placeholder', 'Now in cart: '.$cart->getQuantityInCart($product));
+
+            $form->onSubmit[] = function (ProductCartForm $form) use($cart, $product) {
+                $quantity = $form->values->quantity;
+
+                $cart->addToCart($product, $quantity);
+                $this->flashMessage($product->name . ' has been added to cart ' . $quantity . ' times');
+                $this->redirect('this');
+            };
+
+            return $form;
+        });
+    }
+
     private function getFilters(): FiltersControl
     {
         return $this->getComponent('filters');
-    }
-
-    public function injectCategoriesFacade(CategoriesFacade $categoriesFacade)
-    {
-        $this->categoriesFacade = $categoriesFacade;
-    }
-
-    public function injectProductsFacade(ProductsFacade $productsFacade)
-    {
-        $this->productsFacade = $productsFacade;
-    }
-
-    public function injectFiltersControlFactory(FiltersControlFactory $filtersControlFactory)
-    {
-        $this->filtersControlFactory = $filtersControlFactory;
     }
 }

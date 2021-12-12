@@ -3,6 +3,8 @@
 namespace App\StorefrontModule\Components\CartControl;
 
 use App\Model\Entities\Cart;
+use App\Model\Entities\CartItem;
+use App\Model\Entities\Product;
 use App\Model\Facades\CartsFacade;
 use App\Model\Facades\UsersFacade;
 use Exception;
@@ -14,50 +16,45 @@ use Nette\Security\User;
 class CartControl extends Control
 {
     private User $user;
-
-    private CartsFacade $cartsFacade;
-
     private Cart $cart;
+    private CartControlFacade $cartControlFacade;
 
-    public function __construct(User $user, Session $session, CartsFacade $cartsFacade, UsersFacade $usersFacade)
+    public function __construct(
+        User $authenticatedUser,
+        CartControlFacade $cartControlFacade
+    )
     {
-        $this->user = $user;
-        $this->cartsFacade = $cartsFacade;
-        $cartSession = $session->getSection('cart');
+        $cart = $cartControlFacade->resolveCart($authenticatedUser);
 
-        $cartId = $cartSession->get('cartId');
-        try {
-            $this->cart = $this->cartsFacade->getCartById($cartId);
-            if ($user->isLoggedIn() && $this->cart->user->id != $user->id) {
-                if ($this->cart->getTotalCount() > 0) {
-                    $this->cartsFacade->deleteCartByUser($user->id);
-                    $this->cart->user = $usersFacade->getUser($user->id);
-                    $this->cartsFacade->saveCart($this->cart);
-                }
-            }
-        } catch (Exception $e) {
-            if ($user->isLoggedIn()) {
-                try {
-                    $this->cart = $this->cartsFacade->getCartByUser($user->id);
-                    $cartSession->set('cartId', $this->cart->id);
-                } catch (Exception $e) {
-                    $this->cart = new Cart();
-                    $this->cart->user = $usersFacade->getUser($user->id);
-                    $this->cartsFacade->saveCart($this->cart);
-                }
-            }
-        }
+        $cartControlFacade->saveCartForUser($cart, $authenticatedUser);
 
-        if (!$this->cart) {
-            $this->cart = new Cart();
-            $this->cartsFacade->saveCart($this->cart);
-        }
+        $this->cart = $cart;
+        $this->user = $authenticatedUser;
+        $this->cartControlFacade = $cartControlFacade;
     }
 
     public function render($params = []): void
     {
         $template = $this->prepareTemplate('default');
+        $template->cart = $this->cart;
         $template->render();
+    }
+
+    public function renderList($params = []): void
+    {
+        $template = $this->prepareTemplate('list');
+        $template->cart = $this->cart;
+        $template->render();
+    }
+
+    public function addToCart(Product $product, int $quantity)
+    {
+        $this->cartControlFacade->addProductToCart($this->cart, $product, $quantity);
+    }
+
+    public function getQuantityInCart(Product $product): int
+    {
+        return $this->cartControlFacade->getCountInCart($this->cart, $product);
     }
 
     private function prepareTemplate(string $templateName = ''): Template

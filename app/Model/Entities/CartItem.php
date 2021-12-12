@@ -10,4 +10,8 @@ namespace App\Model\Entities;
  */
 class CartItem extends BaseEntity
 {
+    public function addQuantity(int $quantitySurplus)
+    {
+        $this->quantity += $quantitySurplus;
+    }
 }

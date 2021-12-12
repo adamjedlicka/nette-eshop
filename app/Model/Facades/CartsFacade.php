@@ -24,7 +24,7 @@ class CartsFacade
         $this->cartItemRepository = $cartItemRepository;
     }
 
-    public function getCartById(int $id): Cart
+    public function getCartById(?int $id): Cart
     {
         return $this->cartRepository->find($id);
     }
