@@ -27,7 +27,7 @@ class ProductPresenter extends BasePresenter
         $this->productCartFormFactory = $productCartFormFactory;
     }
 
-    public function renderView($slug)
+    public function actionView($slug)
     {
         $product = $this->productsFacade->getProductBySlug($slug);
         $this->template->product = $product;
