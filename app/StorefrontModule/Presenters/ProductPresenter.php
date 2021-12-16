@@ -7,7 +7,6 @@ use App\Model\Facades\ProductsFacade;
 use App\StorefrontModule\Components\CartControl\CartControl;
 use App\StorefrontModule\Components\ProductCartForm\ProductCartForm;
 use App\StorefrontModule\Components\ProductCartForm\ProductCartFormFactory;
-use Nette\Application\UI\Multiplier;
 
 class ProductPresenter extends BasePresenter
 {
@@ -19,8 +18,7 @@ class ProductPresenter extends BasePresenter
     public function __construct(
         ProductsFacade $productsFacade,
         ProductCartFormFactory $productCartFormFactory
-    )
-    {
+    ) {
         parent::__construct();
 
         $this->productsFacade = $productsFacade;
@@ -29,12 +27,12 @@ class ProductPresenter extends BasePresenter
 
     public function actionView($slug)
     {
-        $product = $this->productsFacade->getProductBySlug($slug);
-        $this->template->product = $product;
-        $this->currentProduct = $product;
+        $this->currentProduct = $this->productsFacade->getProductBySlug($slug);
+    }
 
-
-        $this->getComponent('productCartForm');
+    public function renderView()
+    {
+        $this->template->product = $this->currentProduct;
     }
 
     protected function createComponentProductCartForm(): ProductCartForm
@@ -42,14 +40,14 @@ class ProductPresenter extends BasePresenter
         /** @var CartControl $cart */
         $cart = $this->getComponent('cart');
 
-        $product = $this->currentProduct; //Typed property App\StorefrontModule\Presenters\ProductPresenter::$currentProduct must not be accessed before initialization
+        $product = $this->currentProduct;
 
         $form = $this->productCartFormFactory->create();
         $form->setDefaults(['id' => $product->id]);
         $form['quantity']->setHtmlAttribute('placeholder', 'Now in cart: ' . $cart->getQuantityInCart($product));
 
         $form->onSubmit[] = function (ProductCartForm $form) use ($cart, $product) {
-            $quantity = $form->values->quantity;
+            $quantity = $form->values->quantity ?? 1;
 
             $cart->addToCart($product, $quantity);
             $this->flashMessage($product->name . ' has been added to cart ' . $quantity . ' times');
@@ -58,5 +56,4 @@ class ProductPresenter extends BasePresenter
 
         return $form;
     }
-
 }

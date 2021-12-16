@@ -33,8 +33,7 @@ class ProductCartForm extends Form
         $this->addHidden('id', '')
             ->setRequired('id must be set');
 
-        $this->addInteger('quantity', '')
-            ->setRequired('quantity not passed');
+        $this->addInteger('quantity', '');
 
         $this->addSubmit('add', 'Add to cart')
             ->onClick[] = function (SubmitButton $button) {

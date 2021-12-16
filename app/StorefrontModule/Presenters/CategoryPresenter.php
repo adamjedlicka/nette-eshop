@@ -71,7 +71,7 @@ class CategoryPresenter extends BasePresenter
             $form['quantity']->setHtmlAttribute('placeholder', 'Now in cart: '.$cart->getQuantityInCart($product));
 
             $form->onSubmit[] = function (ProductCartForm $form) use($cart, $product) {
-                $quantity = $form->values->quantity;
+                $quantity = $form->values->quantity ?? 1;
 
                 $cart->addToCart($product, $quantity);
                 $this->flashMessage($product->name . ' has been added to cart ' . $quantity . ' times');

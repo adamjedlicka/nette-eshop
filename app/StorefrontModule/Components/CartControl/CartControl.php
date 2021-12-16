@@ -47,7 +47,7 @@ class CartControl extends Control
         $template->render();
     }
 
-    public function addToCart(Product $product, int $quantity)
+    public function addToCart(Product $product, int $quantity = 1)
     {
         $this->cartControlFacade->addProductToCart($this->cart, $product, $quantity);
     }
