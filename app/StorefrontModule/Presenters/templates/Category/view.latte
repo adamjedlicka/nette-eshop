@@ -3,6 +3,9 @@
 <nav class="mt-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{plink Homepage:default}" class="ajax">Home</a></li>
+        {foreach $category->getCategoryTree() as $parent}
+        <li class="breadcrumb-item active"><a href="{plink Category:view $parent->slug}">{$parent->name}</a></li>
+        {/foreach}
         <li class="breadcrumb-item active" aria-current="page">{$category->name}</li>
     </ol>
 </nav>

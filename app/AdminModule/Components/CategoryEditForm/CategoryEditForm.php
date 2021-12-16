@@ -45,6 +45,9 @@ class CategoryEditForm extends Form
         $this->addTextArea('description', 'Description')
             ->setRequired(false);
 
+        $this->addSelect('parent', 'Parent category', $this->getParentCategories())
+            ->setRequired(false);
+
         $this->addMultiSelect('attributes', 'Attributes', $this->getAttributes())
             ->setRequired(false);
 
@@ -66,6 +69,7 @@ class CategoryEditForm extends Form
 
             $category->assign($values, ['name', 'description']);
             $category->slug = Strings::webalize($values['name']);
+            $category->parent = $values['parent'] ? $this->categoriesFacade->getCategory($values['parent']) : null;
 
             $this->categoriesFacade->saveCategory($category);
             $category->replaceAllAttributes($values['attributes']);
@@ -84,6 +88,7 @@ class CategoryEditForm extends Form
                 'description' => $values->description,
                 'slug' => $values->slug,
                 'attributes' => $this->getSelectedAttributes($values),
+                'parent' => $values->parent?->id,
             ];
         }
 
@@ -112,5 +117,18 @@ class CategoryEditForm extends Form
         }
 
         return $attributes;
+    }
+
+    public function getParentCategories()
+    {
+        $parentCategories = [
+            null => ''
+        ];
+
+        foreach ($this->categoriesFacade->findCategories() as $category) {
+            $parentCategories[$category->id] = $category->name;
+        }
+
+        return $parentCategories;
     }
 }

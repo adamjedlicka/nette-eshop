@@ -22,9 +22,13 @@ class FiltersControl extends Form
 
     public function createSubcomponents(Category $category, $selectedValues)
     {
-        foreach ($category->attributes as $attribute) {
-            $this->addSelect($attribute->id, $attribute->name, $this->getAllValues($attribute))
-                ->setDefaultValue($this->getDefaultValue($attribute, $selectedValues));
+        $categories = array_merge([$category], $this->getAllSubcategories($category));
+
+        foreach ($categories as $category) {
+            foreach ($category->attributes as $attribute) {
+                $this->addSelect($attribute->id, $attribute->name, $this->getAllValues($attribute))
+                    ->setDefaultValue($this->getDefaultValue($attribute, $selectedValues));
+            }
         }
 
         $this->addSubmit('ok', 'Filter')
@@ -38,6 +42,17 @@ class FiltersControl extends Form
 
             $this->onSuccess($values);
         };
+    }
+
+    private function getAllSubcategories(Category $category): array
+    {
+        $subcategories = [];
+
+        foreach ($category->children as $subcategory) {
+            array_push($subcategories, $subcategory, ...$this->getAllSubcategories($subcategory));
+        }
+
+        return $subcategories;
     }
 
     private function getAllValues(Attribute $attribute): array
