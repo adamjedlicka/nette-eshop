@@ -7,13 +7,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                {foreach $categories as $category}
-                <li class="nav-item">
-                    <a class="ajax nav-link" href="{plink Category:view slug:$category->slug}">{$category->name}</a>
-                </li>
-                {/foreach}
+            <ul class="navbar-nav me-auto dropdown-menu-top-level">
+                {control navigation}
             </ul>
+
             {if $user->isLoggedIn()}
                 {if $user->isAllowed('Admin:Dashboard', 'view')}
                     <a class="btn btn-outline-secondary me-2" href="{plink :Admin:Dashboard:default}">Admin</a>

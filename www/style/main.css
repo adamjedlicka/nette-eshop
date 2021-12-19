@@ -1,0 +1,35 @@
+@media all and (min-width: 992px) {
+    .dropdown-menu li {
+        position: relative;
+    }
+
+    .dropdown-menu .submenu {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: -9px;
+    }
+
+    .dropdown-menu > li:hover > .submenu {
+        display: block;
+    }
+
+    .dropdown-menu-top-level > li:hover > .submenu {
+        display: block;
+    }
+}
+
+@media (max-width: 991px) {
+    .dropdown-menu .dropdown-menu {
+        margin-left: 0.7rem;
+        margin-right: 0.7rem;
+        margin-bottom: .5rem;
+    }
+
+    .dropdown-menu {
+        display: block;
+        border: none;
+        margin-left: 15px;
+        background-color: initial;
+    }
+}

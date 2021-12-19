@@ -6,6 +6,7 @@ use App\StorefrontModule\Components\CartControl\CartControl;
 use App\StorefrontModule\Components\CartControl\CartControlFactory;
 use App\StorefrontModule\Components\Header\Header;
 use App\StorefrontModule\Components\Header\HeaderFactory;
+use App\StorefrontModule\Components\Navigation\NavigationFactory;
 use Nette\Application\UI\Presenter;
 
 class BasePresenter extends Presenter
@@ -13,6 +14,8 @@ class BasePresenter extends Presenter
     private HeaderFactory $headerFactory;
 
     private CartControlFactory $cartControlFactory;
+
+    private NavigationFactory $navigationFactory;
 
     public function beforeRender()
     {
@@ -40,5 +43,10 @@ class BasePresenter extends Presenter
     public function injectCartControlFactory(CartControlFactory $cartControlFactory)
     {
         $this->cartControlFactory = $cartControlFactory;
+    }
+
+    public function injectNavigationFactory(NavigationFactory $navigationFactory)
+    {
+        $this->navigationFactory = $navigationFactory;
     }
 }

@@ -51,6 +51,7 @@ services:
     - App\Latte\Filters\Excerpt
 
     - App\StorefrontModule\Components\Header\HeaderFactory
+    - App\StorefrontModule\Components\Navigation\NavigationFactory
     - App\StorefrontModule\Components\UserLoginForm\UserLoginFormFactory
     - App\StorefrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
     - App\StorefrontModule\Components\CartControl\CartControlFactory
