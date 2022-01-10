@@ -31,6 +31,7 @@ services:
     - App\Model\Repositories\PermissionRepository
     - App\Model\Repositories\ForgottenPasswordRepository
     - App\Model\Repositories\ProductRepository
+    - App\Model\Repositories\OrderRepository
     - App\Model\Repositories\CategoryRepository
     - App\Model\Repositories\CartRepository
     - App\Model\Repositories\CartItemRepository
@@ -42,6 +43,7 @@ services:
     - App\Model\Facades\CategoriesFacade
     - App\Model\Facades\ProductsFacade
     - App\Model\Facades\ImagesFacade
+    - App\Model\Facades\OrdersFacade
     - App\Model\Facades\CartsFacade
     - App\Model\Facades\AttributesFacade
     - App\Model\Facades\ValuesFacade
@@ -59,6 +61,7 @@ services:
     - App\StorefrontModule\Components\CartControl\CartControlFactory
     - App\StorefrontModule\Components\FiltersControl\FiltersControlFactory
     - App\StorefrontModule\Components\ProductCartForm\ProductCartFormFactory
+    - App\StorefrontModule\Components\OrderForm\OrderFormFactory
     - App\StorefrontModule\Components\CartControl\CartControlFacade
     - App\StorefrontModule\Components\CartControl\CartSession
     - App\StorefrontModule\Components\PaginationControl\PaginationControlFactory
