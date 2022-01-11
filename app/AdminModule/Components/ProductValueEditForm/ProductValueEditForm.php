@@ -33,6 +33,7 @@ class ProductValueEditForm extends Form
     {
         foreach ($product->category->attributes as $attribute) {
             $this->addMultiSelect($attribute->id, $attribute->name, $this->getAllValues($attribute))
+                ->setHtmlAttribute('data-custom-type', 'select2')
                 ->setDefaultValue($this->getCurrentValues($product, $attribute));
         }
 

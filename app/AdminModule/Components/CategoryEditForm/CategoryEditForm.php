@@ -46,6 +46,7 @@ class CategoryEditForm extends Form
             ->setRequired(false);
 
         $this->addSelect('parent', 'Parent category', $this->getParentCategories())
+            ->setHtmlAttribute('data-custom-type', 'select2')
             ->setRequired(false);
 
         $this->addMultiSelect('attributes', 'Attributes', $this->getAttributes())

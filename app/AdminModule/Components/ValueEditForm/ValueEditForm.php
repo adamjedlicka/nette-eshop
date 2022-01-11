@@ -47,6 +47,7 @@ class ValueEditForm extends Form
             ->setRequired('Name is required');
 
         $this->addSelect('attribute', 'Attribute', $this->getAttributes())
+            ->setHtmlAttribute('data-custom-type', 'select2')
             ->setRequired('Attribute is required');
 
         $this->addSubmit('ok', 'Save')
