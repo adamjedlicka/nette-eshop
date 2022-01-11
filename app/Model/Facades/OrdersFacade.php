@@ -5,6 +5,7 @@ namespace App\Model\Facades;
 use App\Model\Entities\Cart;
 use App\Model\Entities\CartItem;
 use App\Model\Entities\Order;
+use App\Model\Entities\User;
 use App\Model\Repositories\OrderRepository;
 use Dibi\DateTime;
 
@@ -20,9 +21,25 @@ class OrdersFacade
     }
 
     /** @return Order[] */
-    public function getOrders(int $userId): array
+    public function getOrders(User $user): array
     {
-        return $this->orderRepository->findAllBy(['user' => $userId]);
+        return $this->orderRepository->findAllBy(['user_id' => $user->id, 'order' => 'created_at DESC']);
+    }
+
+    public function markOrderPaid(int $orderId)
+    {
+        /** @var Order $order */
+        $order = $this->orderRepository->find($orderId);
+        $order->paidAt = new \DateTimeImmutable();
+        $this->orderRepository->persist($order);
+    }
+
+    public function markOrderSent(int $orderId)
+    {
+        /** @var Order $order */
+        $order = $this->orderRepository->find($orderId);
+        $order->shippedAt = new \DateTimeImmutable();
+        $this->orderRepository->persist($order);
     }
 
     public function create(
@@ -67,7 +84,7 @@ class OrdersFacade
                         'id' => $cartItem->product->id,
                         'name' => $cartItem->product->name,
                         'price' => $cartItem->product->price,
-                        'quantity' => $cartItem->quantity
+                        'quantity' => $cartItem->quantity,
                     ];
                 },
                 $cartItems

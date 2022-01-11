@@ -12,6 +12,7 @@ class PaginationControl extends Control
     const TEMPLATE = __DIR__ . '/templates/default.latte';
 
     private int $radius = 5;
+    private bool $useAjax = true;
 
     private Paginator $paginator;
 
@@ -43,6 +44,11 @@ class PaginationControl extends Control
         $this->paginator->setItemsPerPage($itemsPerPage);
     }
 
+    public function disableAjax()
+    {
+        $this->useAjax = false;
+    }
+
     public function render()
     {
         $this->template->setFile(self::TEMPLATE);
@@ -50,6 +56,7 @@ class PaginationControl extends Control
         $this->paginator->setPage($this->getCurrentPage());
 
         $this->template->paginator = $this->paginator;
+        $this->template->useAjax = $this->useAjax;
 
         $this->template->render();
     }

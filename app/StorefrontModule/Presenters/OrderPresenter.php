@@ -57,9 +57,14 @@ class OrderPresenter extends BasePresenter
     {
     }
 
-    public function renderView()
+    public function renderList()
     {
-        $this->template->orders = $this->ordersFacade->getOrders($this->currentUser->getId());
+        if($this->currentUser->isLoggedIn()){
+            $appUser = $this->usersFacade->getUser($this->currentUser->getId());
+            $this->template->orders = $this->ordersFacade->getOrders($appUser);
+        } else{
+            $this->template->orders = [];
+        }
     }
 
     protected function createComponentOrderForm(): OrderForm

@@ -2,4 +2,11 @@
 
 <h1 n:block="title">{$user->getIdentity()->name}</h1>
 
-<a n:href="logout">Logout</a>
+<div class="row">
+    <div class="col-6">
+        <a href="{plink Order:List}" class="btn btn-primary ">Your previous orders</a>
+    </div>
+    <div class="col-6">
+        <a n:href="logout" class="btn btn-danger ">Logout</a>
+    </div>
+</div>
