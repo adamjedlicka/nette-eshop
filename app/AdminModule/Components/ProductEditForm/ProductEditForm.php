@@ -66,6 +66,7 @@ class ProductEditForm extends Form
             ->setRequired(false);
 
         $this->addSelect('category', 'Category', $this->getCategories())
+            ->setHtmlAttribute('data-custom-type', 'select2')
             ->setRequired('Category is required');
 
         $this->addSubmit('ok', 'Save')

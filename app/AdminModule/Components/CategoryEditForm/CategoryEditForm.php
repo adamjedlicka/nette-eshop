@@ -49,6 +49,7 @@ class CategoryEditForm extends Form
             ->setRequired(false);
 
         $this->addMultiSelect('attributes', 'Attributes', $this->getAttributes())
+            ->setHtmlAttribute('data-custom-type', 'select2')
             ->setRequired(false);
 
         $this->addSubmit('ok', 'Save')
