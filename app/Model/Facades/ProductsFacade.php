@@ -58,8 +58,8 @@ class ProductsFacade
         }
     }
 
-    public function getCategoryProducts(Category $category, $values): array
+    public function getCategoryProducts(Category $category, $values, $page): array
     {
-        return $this->productRepository->getByFilteredCategory($category, $values);
+        return $this->productRepository->getByFilteredCategory($category, $values, $page);
     }
 }

@@ -12,19 +12,27 @@ class ProductRepository extends BaseRepository
         return parent::findBy($cond);
     }
 
-    public function getByFilteredCategory(Category $category, $values = null)
+    public function getByFilteredCategory(Category $category, $values = null, $page = null)
     {
         $categoryIds = $this->getCategoryIds([$category->id]);
 
-        $query = $this->connection->select('product.*')->from('product')
-            ->leftJoin('product_value')->on('product_value.product_id', '=', 'product.id')
+        $query = $this->connection->select('*')->from('product')
             ->where('product.category_id', 'IN', '(' . implode(', ', $categoryIds) . ')');
 
         if ($values) {
-            $query->where('product_value.value_id', 'IN', '(' . implode(', ', $values) . ')');
+            $subquery = $this->connection->select('*')->from('product_value')
+                ->where('product_value.value_id', 'IN', '(' . implode(', ', $values) . ')');
+
+            $productIds = array_map(fn ($row) => $row['product_id'], $subquery->fetchAll());
+
+            $query->where('id', 'IN', '(' . implode(',', $productIds) . ')');
         }
 
-        return $this->createEntities($query->fetchAll());
+        $count = $query->count();
+
+        $query->limit(4)->offset(($page - 1) * 4);
+
+        return [$this->createEntities($query->fetchAll()), $count];
     }
 
     private function getCategoryIds(array $parentIds, bool $root = true): array

@@ -59,6 +59,7 @@ services:
     - App\StorefrontModule\Components\ProductCartForm\ProductCartFormFactory
     - App\StorefrontModule\Components\CartControl\CartControlFacade
     - App\StorefrontModule\Components\CartControl\CartSession
+    - App\StorefrontModule\Components\PaginationControl\PaginationControlFactory
 
     - App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory
     - App\AdminModule\Components\ProductEditForm\ProductEditFormFactory

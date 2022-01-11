@@ -1,0 +1,7 @@
+<nav class="mt-4">
+  <ul class="pagination">
+    {for $i = $paginator->getFirstPage(); $i <= $paginator->getLastPage(); $i++}
+        <li class="page-item {if $i == $paginator->getPage()}active{/if}"><a class="ajax page-link" n:href="this page:$i">{$i}</a></li>
+    {/for}
+  </ul>
+</nav>
