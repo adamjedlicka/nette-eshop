@@ -2,8 +2,9 @@
 
 <h1 n:block="title">Values</h1>
 
-<div class="my-4">
+<div class="my-4 d-flex gap-4">
     <a href="{link add}" class="btn btn-primary">New value</a>
+    {control valuesFilterForm}
 </div>
 
 {if !empty($values)}

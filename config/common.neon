@@ -65,6 +65,7 @@ services:
     - App\AdminModule\Components\AttributeEditForm\AttributeEditFormFactory
     - App\AdminModule\Components\ValueEditForm\ValueEditFormFactory
     - App\AdminModule\Components\ProductValueEditForm\ProductValueEditFormFactory
+    - App\AdminModule\Components\ValuesFilterForm\ValuesFilterFormFactory
 
     nette.latteFactory:
         setup:

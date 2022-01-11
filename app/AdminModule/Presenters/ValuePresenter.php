@@ -4,6 +4,9 @@ namespace App\AdminModule\Presenters;
 
 use App\AdminModule\Components\ValueEditForm\ValueEditForm;
 use App\AdminModule\Components\ValueEditForm\ValueEditFormFactory;
+use App\AdminModule\Components\ValuesFilterForm\ValuesFilterForm;
+use App\AdminModule\Components\ValuesFilterForm\ValuesFilterFormFactory;
+use App\Model\Facades\AttributesFacade;
 use App\Model\Facades\ValuesFacade;
 use Exception;
 use Tracy\Debugger;
@@ -12,11 +15,15 @@ class ValuePresenter extends BasePresenter
 {
     private ValuesFacade $valuesFacade;
 
+    private AttributesFacade $attributesFacade;
+
     private ValueEditFormFactory $valueEditFormFactory;
 
-    public function renderDefault()
+    private ValuesFilterFormFactory $valuesFilterFormFactory;
+
+    public function renderDefault($attribute = null)
     {
-        $this->template->values = $this->valuesFacade->findValues();
+        $this->template->values = $this->valuesFacade->findValues($attribute);
     }
 
     public function actionDelete(int $id)
@@ -75,9 +82,29 @@ class ValuePresenter extends BasePresenter
         return $form;
     }
 
+    public function createComponentValuesFilterForm(): ValuesFilterForm
+    {
+        $form = $this->valuesFilterFormFactory->create();
+
+        $form->selectedAttribute = $this->getParameter('attribute');
+
+        $form->onSuccess[] = function ($filters) {
+            $this->redirect('default', $filters['attribute']);
+        };
+
+        $form->createSubcomponents();
+
+        return $form;
+    }
+
     private function getValueEditForm(): ValueEditForm
     {
         return $this->getComponent('valueEditForm');
+    }
+
+    private function getValuesFilterForm(): ValuesFilterForm
+    {
+        return $this->getComponent('valuesFilterForm');
     }
 
     public function injectValuesFacade(ValuesFacade $valuesFacade)
@@ -85,8 +112,18 @@ class ValuePresenter extends BasePresenter
         $this->valuesFacade = $valuesFacade;
     }
 
+    public function injectAttributesFacade(AttributesFacade $attributesFacade)
+    {
+        $this->attributesFacade = $attributesFacade;
+    }
+
     public function injectValueEditFormFactory(ValueEditFormFactory $valueEditFormFactory)
     {
         $this->valueEditFormFactory = $valueEditFormFactory;
+    }
+
+    public function injectValuesFilterFormFactory(ValuesFilterFormFactory $valuesFilterFormFactory)
+    {
+        $this->valuesFilterFormFactory = $valuesFilterFormFactory;
     }
 }

@@ -30,9 +30,13 @@ class ValuesFacade
     /**
      * @return Value[]
      */
-    public function findValues(): array
+    public function findValues($attribute = null): array
     {
-        return $this->valueRepository->findAll();
+        if ($attribute) {
+            return $this->valueRepository->findAllBy(['attribute_id' => $attribute]);
+        } else {
+            return $this->valueRepository->findAll();
+        }
     }
 
     public function deleteValue(Value $value): bool
