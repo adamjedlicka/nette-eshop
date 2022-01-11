@@ -1,3 +1,5 @@
+{block title}{$cmsPage->name}{/block}
+
 {block content}
 
 <nav class="mt-4" aria-label="breadcrumb">
@@ -6,7 +8,5 @@
         <li class="breadcrumb-item active" aria-current="page">{$cmsPage->name}</li>
     </ol>
 </nav>
-
-<h1 class="title" n:block="title">{$cmsPage->name}</h1>
 
 <div>{$cmsPage->content|noescape}</div>
