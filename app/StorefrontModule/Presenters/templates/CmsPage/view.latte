@@ -1,0 +1,12 @@
+{block content}
+
+<nav class="mt-4" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{plink Homepage:default}" class="ajax">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{$cmsPage->name}</li>
+    </ol>
+</nav>
+
+<h1 class="title" n:block="title">{$cmsPage->name}</h1>
+
+<div>{$cmsPage->content|noescape}</div>

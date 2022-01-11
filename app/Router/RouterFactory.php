@@ -17,8 +17,9 @@ final class RouterFactory
         $admin->addRoute('admin/<presenter=Dashboard>/<action=default>[/<id>]');
 
         $storefront = new RouteList('Storefront');
-        $storefront->addRoute('p/<slug>', 'Product:view');
-        $storefront->addRoute('c/<slug>', 'Category:view');
+        $storefront->addRoute('product/<slug>', 'Product:view');
+        $storefront->addRoute('category/<slug>', 'Category:view');
+        $storefront->addRoute('cms/<slug>', 'CmsPage:view');
         $storefront->addRoute('<presenter=Homepage>/<action=default>[/<id>]');
 
         $router = new RouteList();

@@ -36,6 +36,7 @@ services:
     - App\Model\Repositories\CartItemRepository
     - App\Model\Repositories\AttributeRepository
     - App\Model\Repositories\ValueRepository
+    - App\Model\Repositories\CmsPageRepository
 
     - App\Model\Facades\UsersFacade
     - App\Model\Facades\CategoriesFacade
@@ -46,6 +47,7 @@ services:
     - App\Model\Facades\ValuesFacade
     - App\Model\Entities\CartFactory
     - App\Model\Entities\CartItemFactory
+    - App\Model\Facades\CmsPageFacade
 
     - App\Latte\Filters\Price
     - App\Latte\Filters\Excerpt
@@ -67,6 +69,7 @@ services:
     - App\AdminModule\Components\ValueEditForm\ValueEditFormFactory
     - App\AdminModule\Components\ProductValueEditForm\ProductValueEditFormFactory
     - App\AdminModule\Components\ValuesFilterForm\ValuesFilterFormFactory
+    - App\AdminModule\Components\CmsPageEditForm\CmsPageEditFormFactory
 
     nette.latteFactory:
         setup:

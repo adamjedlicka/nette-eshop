@@ -4,6 +4,7 @@ namespace App\Model\Authorizator;
 
 use App\Model\Entities\Attribute;
 use App\Model\Entities\Category;
+use App\Model\Entities\CmsPage;
 use App\Model\Entities\Permission;
 use App\Model\Entities\Product;
 use App\Model\Entities\Value;
@@ -48,6 +49,10 @@ class Authorizator extends \Nette\Security\Permission
             return $this->valueResourceIsAllowed($role, $resource, $privilege);
         }
 
+        if ($resource instanceof CmsPage) {
+            return $this->cmsPageResourceIsAllowed($role, $resource, $privilege);
+        }
+
         return parent::isAllowed($role, $resource, $privilege);
     }
 
@@ -89,5 +94,15 @@ class Authorizator extends \Nette\Security\Permission
         }
 
         return parent::isAllowed($role, 'Attribute', $privilege);
+    }
+
+    private function cmsPageResourceIsAllowed($role, CmsPage $resource, $privilege)
+    {
+        switch ($privilege) {
+            case 'delete':
+                //TODO kontrola, jestli jsou v kategorii nějaké produkty - pokud ano, nesmažeme ji
+        }
+
+        return parent::isAllowed($role, 'CmsPage', $privilege);
     }
 }

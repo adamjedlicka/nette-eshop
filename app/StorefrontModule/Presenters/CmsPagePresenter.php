@@ -4,13 +4,13 @@ namespace App\StorefrontModule\Presenters;
 
 use App\Model\Facades\CmsPageFacade;
 
-class HomepagePresenter extends BasePresenter
+class CmsPagePresenter extends BasePresenter
 {
     private CmsPageFacade $cmsPageFacade;
 
-    public function renderDefault()
+    public function renderView(string $slug)
     {
-        $cmsPage = $this->cmsPageFacade->getCmsPageBySlug('home');
+        $cmsPage = $this->cmsPageFacade->getCmsPageBySlug($slug);
 
         $this->template->cmsPage = $cmsPage;
     }
