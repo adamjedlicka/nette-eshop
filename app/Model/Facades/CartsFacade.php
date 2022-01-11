@@ -52,6 +52,15 @@ class CartsFacade
         $this->cartRepository->persist($cart);
     }
 
+    public function deleteCart(Cart $cart)
+    {
+        foreach ($cart->cartItems as $cartItem){
+            $this->cartItemRepository->delete($cartItem);
+        }
+
+        $this->cartRepository->delete($cart);
+    }
+
     public function deleteCartByUser($user)
     {
         if ($user instanceof User) {

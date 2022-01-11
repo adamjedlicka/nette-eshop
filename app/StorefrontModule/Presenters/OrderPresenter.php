@@ -3,6 +3,8 @@
 namespace App\StorefrontModule\Presenters;
 
 use App\Model\Facades\OrdersFacade;
+use App\Model\Facades\UsersFacade;
+use App\StorefrontModule\Components\CartControl\CartControlFacade;
 use App\StorefrontModule\Components\OrderForm\OrderForm;
 use App\StorefrontModule\Components\OrderForm\OrderFormFactory;
 use App\StorefrontModule\Components\ProductCartForm\ProductCartForm;
@@ -13,20 +15,45 @@ class OrderPresenter extends BasePresenter
     private OrdersFacade $ordersFacade;
     private User $currentUser;
     private OrderFormFactory $orderFormFactory;
+    private CartControlFacade $cartControlFacade;
+    private UsersFacade $usersFacade;
 
     public function __construct(
         OrdersFacade $ordersFacade,
         User $currentUser,
-        OrderFormFactory $orderFormFactory
-    ) {
+        OrderFormFactory $orderFormFactory,
+        CartControlFacade $cartControlFacade,
+        UsersFacade $usersFacade
+    )
+    {
         parent::__construct();
 
         $this->ordersFacade = $ordersFacade;
         $this->currentUser = $currentUser;
         $this->orderFormFactory = $orderFormFactory;
+        $this->cartControlFacade = $cartControlFacade;
+        $this->usersFacade = $usersFacade;
     }
 
-    public function renderCreate()
+    public function actionCreate()
+    {
+        $formDefaultValues = ['cartId' => $this->cartControlFacade->resolveCart($this->currentUser)->id];
+
+        if ($this->currentUser->isLoggedIn()) {
+            $appUser = $this->usersFacade->getUser($this->currentUser->getId());
+            $formDefaultValues['name'] = $appUser->name;
+            $formDefaultValues['email'] = $appUser->email;
+        }
+
+        $form = $this->getComponent('orderForm');
+        $form->setDefaults($formDefaultValues);
+
+        $form->onSubmit[] = function () {
+            $this->redirect('finished');
+        };
+    }
+
+    public function renderFinished()
     {
     }
 
@@ -37,18 +64,6 @@ class OrderPresenter extends BasePresenter
 
     protected function createComponentOrderForm(): OrderForm
     {
-        $form = $this->orderFormFactory->create();
-//        $form->setDefaults(['id' => $product->id]);
-//        $form['quantity']->setHtmlAttribute('placeholder', 'Now in cart: ' . $cart->getQuantityInCart($product));
-//
-//        $form->onSubmit[] = function (ProductCartForm $form) use ($cart, $product) {
-//            $quantity = $form->values->quantity ?? 1;
-//
-//            $cart->addToCart($product, $quantity);
-//            $this->flashMessage($product->name . ' has been added to cart ' . $quantity . ' times');
-//            $this->redirect('this');
-//        };
-
-        return $form;
+        return $this->orderFormFactory->create();
     }
 }

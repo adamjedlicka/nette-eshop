@@ -2,14 +2,20 @@
 
 namespace App\Model\Entities;
 
-use Dibi\DateTime;
 
 /**
  * @property int $id
- * @property User $user
- * @property DateTime $createdAt
- * @property ?DateTime $paidAt
+ * @property User|null $user m:hasOne
+ * @property \DateTimeImmutable $createdAt
+ * @property \DateTimeImmutable|null $paidAt
  * @property string $serializedContent
+ * @property string $name
+ * @property string $email
+ * @property string $phone
+ * @property string $street
+ * @property string $city
+ * @property string $zip
+ * @property string $country
  */
 class Order extends BaseEntity
 {
