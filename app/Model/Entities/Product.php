@@ -6,6 +6,7 @@ namespace App\Model\Entities;
  * @property int $id
  * @property string $name
  * @property string $slug
+ * @property string $excerpt
  * @property string $description
  * @property int $price
  * @property string $thumbnail

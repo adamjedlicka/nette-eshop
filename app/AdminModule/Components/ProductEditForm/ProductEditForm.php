@@ -49,7 +49,12 @@ class ProductEditForm extends Form
         $this->addText('name', 'Name')
             ->setRequired('Name is required');
 
+        $this->addText('excerpt', 'Excerpt')
+            ->setHtmlAttribute('placeholder', 'Short description didsplayed on category listing')
+            ->setRequired('Excerpt is required');
+
         $this->addTextArea('description', 'Description')
+            ->setHtmlAttribute('data-custom-type', 'summernote')
             ->setRequired(false);
 
         $this->addText('price', 'Price')
@@ -86,6 +91,7 @@ class ProductEditForm extends Form
             }
 
             $product->name = $values['name'];
+            $product->excerpt = $values['excerpt'];
             $product->description = $values['description'];
             $product->price = (int) floor($values['price'] * 100);
             if ($values['thumbnail']->hasFile()) {
@@ -108,6 +114,7 @@ class ProductEditForm extends Form
             $values = [
                 'id' => $values->id,
                 'name' => $values->name,
+                'excerpt' => $values->excerpt,
                 'slug' => $values->slug,
                 'description' => $values->description,
                 'price' => $values->price / 100,

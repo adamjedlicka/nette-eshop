@@ -28,7 +28,7 @@
                     <div class="card-body d-flex flex-column">
                         <h2 class="card-title">{$product->name}</h2>
                         <strong>{$product->price|price}</strong>
-                        <p class="card-text flex-grow-1">{$product->description|excerpt}</p>
+                        <p class="card-text flex-grow-1">{$product->excerpt}</p>
                         <a href="{plink Product:view $product->slug}" class="ajax btn btn-primary">Detail</a>
                         <div>
                             {control "productCartForm-$product->id"}
