@@ -6,7 +6,7 @@ use Dibi\DateTime;
 
 /**
  * @property int $id
- * @property User $user m:hasOne
+ * @property User|null $user m:hasOne
  * @property CartItem[] $cartItems m:belongsToMany
  * @property DateTime $modified
  *

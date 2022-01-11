@@ -1,0 +1,67 @@
+{varType App\Model\Entities\Order[] $orders}
+
+{block content}
+
+<h1 n:block="title" class="mt-4 pb-4">Your previous orders</h1>
+
+{if empty($orders)}
+    <div class="mt-4">
+        No previous orders
+    </div>
+{else}
+
+    {foreach $orders as $order}
+        <div class="row">
+            <div class="col-12">
+                <h3>{$order->createdAt->format('j. n. Y H:i:s')}</h3>
+                <h6>
+                    zaplaceno
+                    {if $order->paidAt === null}
+                        <span class="text-danger">&#x2717;</span>
+                    {else}
+                        <span class="text-success">&#10003;</span>
+                    {/if}
+                </h6>
+                <h6>
+                    odesláno
+                    {if $order->shippedAt === null}
+                        <span class="text-danger">&#x2717;</span>
+                    {else}
+                        <span class="text-success">&#10003;</span>
+                    {/if}
+                </h6>
+                <table class="table table hover">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>price</th>
+                        <th>quantity</th>
+                        <th>total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $order->getOrderItems() as $item}
+                        <tr>
+                            <td>{$item->name}</td>
+                            <td>{$item->price|price}</td>
+                            <td>{$item->quantity}</td>
+                            <td>{($item->quantity * $item->price)|price}</td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                    <tfoot>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{$order->getTotalPrice()|price}</td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    {/foreach}
+    </tbody>
+    <tfoot>
+    </tfoot>
+    </table>
+
+{/if}

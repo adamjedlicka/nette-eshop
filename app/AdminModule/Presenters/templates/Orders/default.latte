@@ -1,0 +1,86 @@
+{block content}
+
+<h1 n:block="title" class="mt-4">Customer orders</h1>
+
+<div class="row mt-4">
+    {if empty($orders)}
+        No previous orders
+    {else}
+        {foreach $orders as $order}
+            <div class="col-12 pt-3">
+                <div class="card">
+                    <h4 class="card-header bg-dark text-white">{$order->createdAt->format('j. n. Y H:i:s')}</h4>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                Paid
+                                {if $order->paidAt === null}
+                                    <span class="text-danger">&#x2717;</span> - <a href="{plink markPaid! id:$order->id}">Mark as paid</a>
+                                {else}
+                                    <span class="text-success">&#10003;</span> - {$order->paidAt->format('j. n. Y H:i:s')}
+                                {/if}
+                            </div>
+                            <div class="col-6">
+                                Shipped
+                                {if $order->shippedAt === null}
+                                    <span class="text-danger">&#x2717;</span> - <a href="{plink markShipped! id:$order->id}">Mark as shipped</a>
+                                {else}
+                                    <span class="text-success">&#10003;</span> - {$order->shippedAt->format('j. n. Y H:i:s')}
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body bg-light">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>Name: {$order->name}</div>
+                                <div>Email: {$order->email}</div>
+                                <div>Phone: {$order->phone}</div>
+                            </div>
+                            <div class="col-6">
+                                <div>Street: {$order->street}</div>
+                                <div>City: {$order->city}</div>
+                                <div>Zip: {$order->zip}</div>
+                                <div>Country: {$order->country}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table hover">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>price</th>
+                                <th>quantity</th>
+                                <th>total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {foreach $order->getOrderItems() as $item}
+                                <tr>
+                                    <td>{$item->name}</td>
+                                    <td>{$item->price|price}</td>
+                                    <td>{$item->quantity}</td>
+                                    <td>{($item->quantity * $item->price)|price}</td>
+                                </tr>
+                            {/foreach}
+                            </tbody>
+                            <tfoot>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{$order->getTotalPrice()|price}</td>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {/foreach}
+    {/if}
+</div>
+
+<div class="row">
+    {control pagination}
+</div>
