@@ -21,7 +21,6 @@ final class ExtendOrderTable extends AbstractMigration
     {
         $this->table('order')
             ->addColumn('name', 'string')
-            ->addColumn('name', 'string')
             ->addColumn('email', 'string')
             ->addColumn('phone', 'string')
             ->addColumn('street', 'string')
