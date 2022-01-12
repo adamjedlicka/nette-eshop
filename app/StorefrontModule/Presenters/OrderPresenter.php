@@ -48,7 +48,7 @@ class OrderPresenter extends BasePresenter
         $form = $this->getComponent('orderForm');
         $form->setDefaults($formDefaultValues);
 
-        $form->onSubmit[] = function () {
+        $form->onSuccess[] = function () {
             $this->redirect('finished');
         };
     }
