@@ -26,9 +26,13 @@ class CategoriesFacade
         return $this->categoryRepository->findBy(['slug' => $slug]);
     }
 
-    public function findCategories(array $params = null, int $offset = null, int $limit = null): array
+    public function findCategories($params = null, int $offset = null, int $limit = null): array
     {
-        return $this->categoryRepository->findAllBy($params, $offset, $limit);
+        if (is_string($params)) {
+            return $this->categoryRepository->searchBy($params);
+        } else {
+            return $this->categoryRepository->findAllBy($params, $offset, $limit);
+        }
     }
 
     public function findCategoriesCount(array $params = null): int

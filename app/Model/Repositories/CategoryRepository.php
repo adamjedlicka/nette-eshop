@@ -10,4 +10,12 @@ class CategoryRepository extends BaseRepository
     {
         return parent::findBy($cond);
     }
+
+    public function searchBy(string $query): array
+    {
+        $query = $this->connection->select('*')->from('category')
+            ->where('name', 'LIKE', '\'%' . $query . '%\'');
+
+        return $this->createEntities($query->fetchAll());
+    }
 }
