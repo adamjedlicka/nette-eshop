@@ -53,4 +53,12 @@ class ProductRepository extends BaseRepository
             return $ids;
         }
     }
+
+    public function searchBy(string $query): array
+    {
+        $query = $this->connection->select('*')->from('product')
+            ->where('name', 'LIKE', '\'%' . $query . '%\'');
+
+        return $this->createEntities($query->fetchAll());
+    }
 }

@@ -32,9 +32,13 @@ class ProductsFacade
         return $this->productRepository->findBy(['slug' => $slug]);
     }
 
-    public function findProducts(array $params = null, int $offset = null, int $limit = null): array
+    public function findProducts($params = null, int $offset = null, int $limit = null): array
     {
-        return $this->productRepository->findAllBy($params, $offset, $limit);
+        if (is_string($params)) {
+            return $this->productRepository->searchBy($params);
+        } else {
+            return $this->productRepository->findAllBy($params, $offset, $limit);
+        }
     }
 
     public function saveProduct(Product $product): bool

@@ -11,6 +11,15 @@
                 {control navigation}
             </ul>
 
+            <form x-data="{ query: '', items: [] }" x-init="SearchBar" class="d-flex" style="position: relative;">
+                <input x-model="query" type="text" class="form-control me-2" placeholder="Search" x-on:click="open" x-on:click.away="close">
+                <div class="list-group" style="position: absolute;top: 0;margin-top: 45px">
+                    <template x-for="item in items" :key="item.url">
+                        <a :href="item.url" class="list-group-item list-group-item-action" x-text="item.name"></a>
+                    </template>
+                </div>
+            </form>
+
             {if $user->isLoggedIn()}
                 {if $user->isAllowed('Admin:Dashboard', 'view')}
                     <a class="btn btn-outline-secondary me-2" href="{plink :Admin:Dashboard:default}">Admin</a>
@@ -23,3 +32,29 @@
         </div>
     </div>
 </nav>
+
+<script n:syntax=off>
+function SearchBar () {
+    this.$watch('query', async () => {
+        await this.search()
+    })
+
+    this.search = async () => {
+        if (!this.query) {
+            this.items = []
+            return
+        }
+
+        const response = await fetch(`/search?query=${encodeURIComponent(this.query)}`)
+        this.items = await response.json()
+    }
+
+    this.open = async () => {
+        await this.search()
+    }
+
+    this.close = () => {
+        this.items = []
+    }
+}
+</script>

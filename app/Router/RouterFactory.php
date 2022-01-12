@@ -20,6 +20,7 @@ final class RouterFactory
         $storefront->addRoute('product/<slug>', 'Product:view');
         $storefront->addRoute('category/<slug>', 'Category:view');
         $storefront->addRoute('cms/<slug>', 'CmsPage:view');
+        $storefront->addRoute('search', 'Search:search');
         $storefront->addRoute('<presenter=Homepage>/<action=default>[/<id>]');
 
         $router = new RouteList();
